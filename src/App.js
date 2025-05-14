@@ -23,6 +23,13 @@ function App() {
     }
   };
 
+  const getDday = () => {
+  const today = new Date();
+  const weddingDay = new Date("2025-07-12T00:00:00");
+  const diffTime = weddingDay - today;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays >= 0 ? `D-${diffDays}` : `+${Math.abs(diffDays)}일`;
+};
 useEffect(() => {
   const audio = audioRef.current;
   if (audio) {
@@ -67,7 +74,10 @@ useEffect(() => {
           alt="커버 이미지"
           className="absolute inset-0 w-full h-full object-cover scale-105"
         />
-
+ {/* D-Day 표시 */}
+  <div className="absolute bottom-24 right-8 bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full shadow-md animate-fadeInDown">
+    {getDday()}
+  </div>
         {/* 이름 & 문구 */}
         <div className="absolute top-6 left-4 text-pink-300 text-xs font-semibold tracking-wide animate-fadeInDown">
           JUNBAE
@@ -129,10 +139,28 @@ useEffect(() => {
       </section>
 
       {/* Section 2 - 장소 */}
-      <section className="h-screen snap-start flex flex-col items-center justify-center bg-white px-8">
-        <h2 className="text-2xl font-bold mb-4">📍 결혼식 장소</h2>
-        <p className="text-lg">서울시 마포구 꿈이있는교회 (7월 12일 오전 11:30)</p>
-      </section>
+      <section className="h-screen snap-start flex flex-col items-center justify-center bg-white px-8 text-center">
+  <h2 className="text-2xl font-bold mb-4">📍 결혼식 장소</h2>
+  <p className="text-lg mb-6"> 꿈이 있는 교회 (서울 마포구 창전로 64)</p>
+
+  <div className="flex gap-4">
+    {/* 네이버지도 앱으로 열기 */}
+    <a
+      href="nmap://search?query=서울%20마포구%20창전로%2064"
+      className="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600"
+    >
+      네이버지도 앱
+    </a>
+
+    {/* 카카오맵 앱으로 열기 */}
+    <a
+      href="kakaomap://search?q=서울%20마포구%20창전로%2064"
+      className="bg-yellow-400 text-black px-4 py-2 rounded shadow hover:bg-yellow-500"
+    >
+      카카오맵 앱
+    </a>
+  </div>
+</section>
 
       {/* Section 3 - 성경 말씀 */}
       <section className="h-screen snap-start flex flex-col items-center justify-center bg-pink-100 px-8">
