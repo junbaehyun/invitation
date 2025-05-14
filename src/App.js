@@ -1,5 +1,8 @@
 import React, { useState, useRef ,useEffect} from 'react';
+import DailyVerse from './DailyVerse';
 
+
+  
 // App 함수 바깥에 추가
 function Countdown({ targetDate }) {
   const [timeLeft, setTimeLeft] = useState({});
@@ -175,7 +178,7 @@ useEffect(() => {
           </div>
         )}
       </section>
-{/* Section - 인삿말 & D-Day */}
+{/* Section 2 - 인삿말 & D-Day */}
 
 <img
   src={`${process.env.PUBLIC_URL}/wedding.png`}
@@ -183,7 +186,7 @@ useEffect(() => {
   className="w-full max-h-96 object-cover rounded-lg shadow mb-6"
 />
 <section className="h-screen snap-start bg-white flex flex-col items-center justify-center text-center px-6 py-10 space-y-6">
-  {/* 인삿말 */}
+  {/*  인삿말 */}
   <div className="max-w-lg">
     <p className="text-base leading-relaxed text-gray-700">
       살랑이는 바람결에<br />
@@ -206,7 +209,77 @@ useEffect(() => {
     <span className="font-bold text-pink-600">현준배 ♥ 숄판</span>의 결혼식이 <span id="daysLeft" className="text-pink-500 font-semibold"></span> 남았습니다.
   </p>
 </section>
-      {/* Section 2 - 장소 */}
+
+<section className="h-screen snap-start bg-white flex flex-col items-center justify-center px-6 text-center">
+  <h2 className="text-xl text-orange-400 font-semibold mb-2">예식 안내</h2>
+  <p className="text-lg text-gray-800 mb-1">2025년 7월 12일 토요일 오전 11:30</p>
+  <p className="text-md text-gray-600 mb-6">꿈이있는교회</p>
+
+  <div className="w-8 h-0.5 bg-orange-300 mb-6" />
+
+  {/* 와인잔 이미지 */}
+  <img
+    src={`${process.env.PUBLIC_URL}/wedding-toast.jpg`} // 파일명을 실제 업로드된 파일명에 맞게 수정하세요
+    alt="예식 이미지"
+    className="w-full max-w-md rounded-md mb-8 shadow-md"
+  />
+
+  {/* 달력 */}
+  <h3 className="text-lg text-orange-400 mb-2">7월</h3>
+  <div className="text-gray-800">
+    <div className="grid grid-cols-7 gap-y-2 text-sm">
+      {['일', '월', '화', '수', '목', '금', '토'].map((day, i) => (
+        <div key={i} className="font-medium text-gray-500">{day}</div>
+      ))}
+
+      {/* 날짜들: 공백 + 1~31 */}
+      {Array.from({ length: 31 + 1 }, (_, i) => {
+        const day = i === 0 ? null : i;
+        const isSelected = day === 12;
+
+        return (
+          <div key={i} className={`h-8 w-8 flex items-center justify-center rounded-full ${isSelected ? 'bg-orange-300 text-white font-bold' : ''}`}>
+            {day || ''}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+{/* Section - 예식 타임라인 */}
+<section className="h-screen snap-start bg-white flex flex-col items-center justify-center px-6 py-12 text-center">
+  <h2 className="text-2xl font-bold text-pink-500 mb-8">예식 타임라인</h2>
+
+  <ul className="space-y-6 w-full max-w-md">
+    <li className="relative pl-6 text-left">
+      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
+      <p className="text-sm text-gray-500">🕰️ 11:00</p>
+      <p className="text-lg text-gray-800 font-semibold">하객 입장 시작</p>
+    </li>
+
+    <li className="relative pl-6 text-left">
+      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
+      <p className="text-sm text-gray-500">💒 11:30</p>
+      <p className="text-lg text-gray-800 font-semibold">결혼식 본식 시작</p>
+    </li>
+
+    <li className="relative pl-6 text-left">
+      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
+      <p className="text-sm text-gray-500">📷 12:00</p>
+      <p className="text-lg text-gray-800 font-semibold">하객 기념 촬영</p>
+    </li>
+
+    <li className="relative pl-6 text-left">
+      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
+      <p className="text-sm text-gray-500">🍽️ 12:30</p>
+      <p className="text-lg text-gray-800 font-semibold">피로연 및 식사</p>
+    </li>
+  </ul>
+
+  <p className="mt-10 text-sm text-gray-400">* 일정은 현장 사정에 따라 변경될 수 있습니다.</p>
+</section>
+      {/* Section 4 - 장소 */}
       <section className="h-screen snap-start flex flex-col items-center justify-center bg-white px-8 text-center">
   <h2 className="text-2xl font-bold mb-4">📍 오시는 길</h2>
   <img
@@ -271,6 +344,7 @@ useEffect(() => {
         <p className="text-lg text-center">
           “하나님이 짝지어 주신 것을 사람이 나누지 못할지니라” (마태복음 19:6)
         </p>
+          <DailyVerse />
       </section>
     </div>
   );
