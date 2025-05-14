@@ -111,7 +111,7 @@ useEffect(() => {
           className="absolute inset-0 w-full h-full object-cover scale-105"
         />
  {/* D-Day 표시 */}
-  <div className="absolute bottom-24 right-8 bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full shadow-md animate-fadeInDown">
+  <div className="absolute bottom-16 center bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full shadow-md animate-fadeInDown">
     {getDday()}
   </div>
         {/* 이름 & 문구 */}
@@ -135,6 +135,8 @@ useEffect(() => {
           </h1>
           <p className="text-sm tracking-wider text-pink-300">2025.07.12 SAT 11:30 꿈이있는교회</p>
         </div>
+          {/* D-Day 줄 */}
+  
 
         <div className="absolute bottom-6 animate-bounce text-pink-300 text-2xl">↓</div>
       </section>
