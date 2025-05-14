@@ -1,5 +1,42 @@
 import React, { useState, useRef ,useEffect} from 'react';
 
+// App 함수 바깥에 추가
+function Countdown({ targetDate }) {
+  const [timeLeft, setTimeLeft] = useState({});
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const end = new Date(targetDate);
+      const diff = end - now;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      setTimeLeft({ days, hours, minutes, seconds });
+
+      const daysText = document.getElementById("daysLeft");
+      if (daysText) daysText.textContent = `${days}일`;
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  return (
+    <div className="flex gap-3 text-sm">
+      {[['DAYS', timeLeft.days], ['HOUR', timeLeft.hours], ['MIN', timeLeft.minutes], ['SEC', timeLeft.seconds]].map(
+        ([label, val]) => (
+          <div key={label} className="flex flex-col items-center bg-gray-100 px-3 py-2 rounded">
+            <span className="text-lg font-bold">{val?.toString().padStart(2, '0')}</span>
+            <span className="text-xs text-gray-500">{label}</span>
+          </div>
+        )
+      )}
+    </div>
+  );
+}
 function App() {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -9,7 +46,6 @@ function App() {
   const handleSubmit = () => {
     setSubmitted(true);
   };
-
   const handlePlayMusic = () => {
     const audio = audioRef.current;
     if (audio) {
@@ -137,11 +173,45 @@ useEffect(() => {
           </div>
         )}
       </section>
+{/* Section - 인삿말 & D-Day */}
 
+<img
+  src={`${process.env.PUBLIC_URL}/wedding.png`}
+  alt="웨딩 장식"
+  className="w-full max-h-96 object-cover rounded-lg shadow mb-6"
+/>
+<section className="h-screen snap-start bg-white flex flex-col items-center justify-center text-center px-6 py-10 space-y-6">
+  {/* 인삿말 */}
+  <div className="max-w-lg">
+    <p className="text-base leading-relaxed text-gray-700">
+      살랑이는 바람결에<br />
+      사랑이 묻어나는 계절입니다.<br /><br />
+      여기 곱고 예쁜 두 사람이 사랑을 맺어<br />
+      인생의 반려자가 되려 합니다.
+    </p>
+    <div className="w-6 h-0.5 bg-orange-300 my-4 mx-auto"></div>
+    <p className="text-sm text-gray-800">신랑 현준배 · 신부 숄판</p>
+  </div>
+
+  {/* Save the Date 타이틀 */}
+  <h2 className="text-orange-400 font-semibold text-lg mt-10">Save the Date</h2>
+
+  {/* D-Day 카운트다운 */}
+  <Countdown targetDate="2025-07-12T11:30:00" />
+
+  {/* 하단 문장 */}
+  <p className="text-sm mt-4 text-gray-700">
+    <span className="font-bold text-pink-600">현준배 ♥ 숄판</span>의 결혼식이 <span id="daysLeft" className="text-pink-500 font-semibold"></span> 남았습니다.
+  </p>
+</section>
       {/* Section 2 - 장소 */}
       <section className="h-screen snap-start flex flex-col items-center justify-center bg-white px-8 text-center">
-  <h2 className="text-2xl font-bold mb-4">📍 결혼식 장소</h2>
-  <p className="text-lg mb-6"> 꿈이 있는 교회 (서울 마포구 창전로 64)</p>
+  <h2 className="text-2xl font-bold mb-4">📍 오시는 길</h2>
+  <img
+    src={`${process.env.PUBLIC_URL}/map.png`}
+    alt="레터 이미지"
+    className="w-full max-w-md mb-6 rounded-lg shadow-md mt-2"
+  />
 
   <div className="flex gap-4">
     {/* 네이버지도 앱으로 열기 */}
@@ -158,6 +228,37 @@ useEffect(() => {
       className="bg-yellow-400 text-black px-4 py-2 rounded shadow hover:bg-yellow-500"
     >
       카카오맵 앱
+    </a>
+  </div>
+    <h2 className="text-2xl font-bold mb-4">🚗 주차 안내</h2>
+  <p className="text-sm text-gray-500 mb-4">📍 서울 마포구 신수동 93-35</p>
+
+  <div className="flex gap-6">
+    {/* Tmap */}
+    <a
+      href="tmap://search?name=서울%20마포구%20신수동%2093-35"
+      className="text-blue-600 text-3xl hover:scale-110 transition-transform"
+    >
+      🚘
+      <p className="text-xs mt-1">Tmap</p>
+    </a>
+
+    {/* Naver Map */}
+    <a
+      href="nmap://search?query=서울%20마포구%20신수동%2093-35"
+      className="text-green-600 text-3xl hover:scale-110 transition-transform"
+    >
+      🗺️
+      <p className="text-xs mt-1">네이버</p>
+    </a>
+
+    {/* Kakao Map */}
+    <a
+      href="kakaomap://search?q=서울%20마포구%20신수동%2093-35"
+      className="text-yellow-600 text-3xl hover:scale-110 transition-transform"
+    >
+      🧭
+      <p className="text-xs mt-1">카카오</p>
     </a>
   </div>
 </section>
