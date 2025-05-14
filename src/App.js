@@ -94,15 +94,22 @@ useEffect(() => {
       </section>
 
       {/* Section 1 - 이름 입력 */}
-      <section className="h-screen flex flex-col items-center justify-center bg-pink-50 text-center snap-start p-6">
-        <h1 className="text-3xl text-pink-600 font-bold mb-4">현준배 ♥ 숄판 결혼합니다</h1>
-        <h2 className="text-xl text-gray-800 mb-2">이름을 입력해 주세요</h2>
+      <section className="h-screen flex flex-col items-center justify-start bg-pink-50 text-center snap-start pt-6">
+
+       {/* 이미지 상단 고정 */}
+  <img
+    src={`${process.env.PUBLIC_URL}/og-image.jpg`}
+    alt="레터 이미지"
+    className="w-full max-w-md mb-6 rounded-lg shadow-md mt-2"
+  />
+      
+      
 
         {!submitted ? (
           <>
             <input
               type="text"
-              placeholder="예: 수빈"
+              placeholder="성함을 입력해주세요"
               className="border border-pink-300 rounded px-4 py-2 mb-4 w-full max-w-xs"
               value={name}
               onChange={(e) => setName(e.target.value)}
