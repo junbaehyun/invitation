@@ -4,7 +4,7 @@ function App() {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const messages: Record<string, string> = {
+  const messages = {
     "수빈": "사랑하는 수빈님, 그리스도의 사랑으로 당신을 초대합니다 💕",
     "지훈": "지훈 형제님, 주님의 평화가 함께하길 바랍니다 🙏",
     "하늘": "하늘 자매님, 함께하는 기쁨을 나누고 싶어요 ☁️",
