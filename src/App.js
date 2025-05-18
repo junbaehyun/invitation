@@ -1,5 +1,5 @@
 import React, { useState, useRef ,useEffect} from 'react';
-import DailyVerse from './DailyVerse';
+
 
 
   
@@ -88,7 +88,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth relative">
+    <div className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth relative bg-paper bg-fixed bg-cover  font-myeongjo text-brownText">
 
       {/* 🎵 오른쪽 아래 재생 버튼 */}
       <button
@@ -145,7 +145,7 @@ useEffect(() => {
       </section>
 
       {/* Section 1 - 이름 입력 */}
-      <section className="h-screen flex flex-col items-center justify-start bg-pink-50 text-center snap-start pt-6">
+      <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-6">
 
        {/* 이미지 상단 고정 */}
   <img
@@ -185,7 +185,7 @@ useEffect(() => {
   alt="웨딩 장식"
   className="w-full max-h-96 object-cover rounded-lg shadow mb-6"
 />
-<section className="h-screen snap-start bg-white flex flex-col items-center justify-center text-center px-6 py-10 space-y-6">
+<section className="h-screen snap-start bg-white flex flex-col items-center justify-center text-center px-6 py-10 space-y-6 ">
   {/*  인삿말 */}
   <div className="max-w-lg">
     <p className="text-base leading-relaxed text-gray-700">
@@ -219,7 +219,7 @@ useEffect(() => {
 
   {/* 와인잔 이미지 */}
   <img
-    src={`${process.env.PUBLIC_URL}/wedding-toast.jpg`} // 파일명을 실제 업로드된 파일명에 맞게 수정하세요
+    src={`${process.env.PUBLIC_URL}/wedding.png`} // 파일명을 실제 업로드된 파일명에 맞게 수정하세요
     alt="예식 이미지"
     className="w-full max-w-md rounded-md mb-8 shadow-md"
   />
@@ -279,72 +279,188 @@ useEffect(() => {
 
   <p className="mt-10 text-sm text-gray-400">* 일정은 현장 사정에 따라 변경될 수 있습니다.</p>
 </section>
-      {/* Section 4 - 장소 */}
-      <section className="h-screen snap-start flex flex-col items-center justify-center bg-white px-8 text-center">
-  <h2 className="text-2xl font-bold mb-4">📍 오시는 길</h2>
+    <section className="h-screen snap-start bg-white px-6 py-10 flex flex-col items-center justify-center text-center space-y-6">
+  <h2 className="text-3xl font-bold text-gray-800 mb-2">📍 오시는 길</h2>
+
+  {/* 지도 이미지 */}
   <img
     src={`${process.env.PUBLIC_URL}/map.png`}
-    alt="레터 이미지"
-    className="w-full max-w-md mb-6 rounded-lg shadow-md mt-2"
+    alt="지도 이미지"
+    className="w-full max-w-md rounded-lg shadow-md"
   />
 
-  <div className="flex gap-4">
-    {/* 네이버지도 앱으로 열기 */}
+  {/* 상단 네비게이션 앱 링크 */}
+  <div className="flex flex-wrap justify-center gap-4 mt-6">
     <a
       href="nmap://search?query=서울%20마포구%20창전로%2064"
-      className="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600"
+      className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-md shadow hover:bg-green-200 transition"
     >
+      <img src={`${process.env.PUBLIC_URL}/navermap_icon.png`} alt="네이버지도" className="w-5 h-5" />
       네이버지도 앱
     </a>
-
-    {/* 카카오맵 앱으로 열기 */}
     <a
       href="kakaomap://search?q=서울%20마포구%20창전로%2064"
-      className="bg-yellow-400 text-black px-4 py-2 rounded shadow hover:bg-yellow-500"
+      className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-4 py-2 rounded-md shadow hover:bg-yellow-200 transition"
     >
+      <img src={`${process.env.PUBLIC_URL}/kakaomap_icon.png`} alt="카카오맵" className="w-5 h-5" />
       카카오맵 앱
     </a>
   </div>
-    <h2 className="text-2xl font-bold mb-4">🚗 주차 안내</h2>
-  <p className="text-sm text-gray-500 mb-4">📍 서울 마포구 신수동 93-35</p>
+  {/* 오시는 길 안내 아래쪽 안내 메시지 */}
+<div className="mt-10 text-center">
+  <p className="text-sm text-gray-600 font-medium mb-2">
+    📌 <span className="text-pink-600 font-semibold">주차장은 다른 위치에 있어요</span>
+  </p>
+  <p className="text-xs text-gray-500 mb-1">아래로 내려 확인해주세요</p>
+  <div className="text-pink-400 text-2xl animate-bounce mt-1">↓</div>
+</div>
+  </section>
+{/* Section - 주차 안내 */}
+<section className="h-screen snap-start bg-white px-6 py-10 flex flex-col items-center justify-center text-center">
+  <h2 className="text-2xl font-bold mb-6">🚗 주차 안내</h2>
 
-  <div className="flex gap-6">
-    {/* Tmap */}
-    <a
-      href="tmap://search?name=서울%20마포구%20신수동%2093-35"
-      className="text-blue-600 text-3xl hover:scale-110 transition-transform"
-    >
-      🚘
-      <p className="text-xs mt-1">Tmap</p>
-    </a>
+  {/* 안내 박스 */}
+  <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md text-left space-y-4">
+    <p className="text-base text-gray-800">
+      📍 <span className="font-semibold">서울 마포구 신수동 93-35</span><br />
+      해당 위치에 <span className="text-pink-500 font-bold">주차장이 따로</span> 마련되어 있습니다.
+    </p>
 
-    {/* Naver Map */}
-    <a
-      href="nmap://search?query=서울%20마포구%20신수동%2093-35"
-      className="text-green-600 text-3xl hover:scale-110 transition-transform"
-    >
-      🗺️
-      <p className="text-xs mt-1">네이버</p>
-    </a>
+    {/* 지도 앱 버튼 */}
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      {/* Tmap */}
+      <a href="tmap://search?name=서울 마포구 신수동 93-35" className="flex flex-col items-center bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition">
+        <img src={`${process.env.PUBLIC_URL}/tmap_icon.png`} alt="Tmap" className="w-8 h-8 mb-1" />
+        <span className="text-sm font-medium">티맵</span>
+      </a>
 
-    {/* Kakao Map */}
-    <a
-      href="kakaomap://search?q=서울%20마포구%20신수동%2093-35"
-      className="text-yellow-600 text-3xl hover:scale-110 transition-transform"
-    >
-      🧭
-      <p className="text-xs mt-1">카카오</p>
-    </a>
+      {/* Kakao Navi */}
+      <a href="kakaomap://search?q=서울 마포구 신수동 93-35" className="flex flex-col items-center bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition">
+        <img src={`${process.env.PUBLIC_URL}/kakao_icon.png`} alt="Kakao" className="w-8 h-8 mb-1" />
+        <span className="text-sm font-medium">카카오내비</span>
+      </a>
+
+      {/* Naver */}
+      <a href="nmap://search?query=서울 마포구 신수동 93-35" className="flex flex-col items-center bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition">
+        <img src={`${process.env.PUBLIC_URL}/navermap_icon.png`} alt="Naver" className="w-8 h-8 mb-1" />
+        <span className="text-sm font-medium">네이버지도</span>
+      </a>
+    </div>
   </div>
+
+  {/* 하단 안내 문구 */}
+  <p className="mt-6 text-xs text-gray-400">* 지도 앱을 눌러 바로 길찾기를 시작하세요.</p>
+</section>
+{/* Section - 주차 안내 (CarPlay 스타일) */}
+<section className="h-screen snap-start bg-white px-6 py-10 flex flex-col items-center justify-center text-center">
+<h2 className="text-2xl font-bold mb-4">🚗 주차 안내</h2>
+<p className="text-base text-gray-700 mb-4">
+  📍 <span className="font-semibold">서울 마포구 신수동 93-35</span>
+</p>
+
+<img
+  src={`${process.env.PUBLIC_URL}/parkingimg.png`}
+  alt="주차장 안내 이미지"
+  className="w-full max-w-md rounded-lg shadow-lg"
+/>
+  <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 space-y-5 border border-gray-100">
+    {/* 주차 안내 텍스트 */}
+        {/* 지도 앱 버튼들 */}
+    <div className="grid grid-cols-3 gap-4">
+      {/* Tmap */}
+      <a
+        href="tmap://search?name=서울 마포구 신수동 93-35"
+        className="flex flex-col items-center bg-gray-100 rounded-lg py-3 hover:bg-gray-200 transition"
+      >
+        <img src={`${process.env.PUBLIC_URL}/tmap_icon.png`} alt="Tmap" className="w-8 h-8 mb-1" />
+        <span className="text-xs font-medium text-gray-700">티맵</span>
+      </a>
+
+      {/* Kakao Navi */}
+      <a
+        href="kakaomap://search?q=서울 마포구 신수동 93-35"
+        className="flex flex-col items-center bg-gray-100 rounded-lg py-3 hover:bg-gray-200 transition"
+      >
+        <img src={`${process.env.PUBLIC_URL}/kakao_icon.png`} alt="Kakao" className="w-8 h-8 mb-1" />
+        <span className="text-xs font-medium text-gray-700">카카오내비</span>
+      </a>
+
+      {/* Naver Map */}
+      <a
+        href="nmap://search?query=서울 마포구 신수동 93-35"
+        className="flex flex-col items-center bg-gray-100 rounded-lg py-3 hover:bg-gray-200 transition"
+      >
+        <img src={`${process.env.PUBLIC_URL}/navermap_icon.png`} alt="Naver" className="w-8 h-8 mb-1" />
+        <span className="text-xs font-medium text-gray-700">네이버지도</span>
+      </a>
+    </div>
+  </div>
+
+  {/* 하단 안내 */}
+  <p className="mt-6 text-sm text-gray-400">* 지도 앱을 눌러 바로 길찾기를 시작하세요.</p>
 </section>
 
+<section className="h-screen snap-start bg-white flex flex-col items-center justify-center px-6 text-center space-y-4">
+  <h2 className="text-2xl font-bold text-orange-500">🍽️ 식사 안내</h2>
+
+  <p className="text-lg text-gray-800">
+    식사하고 가 주실꺼죠? <span className="text-pink-500 text-2xl">🥺</span>
+  </p>
+  <p className="text-base text-gray-600">
+    레스토랑은 예식장에서 <span className="font-semibold text-orange-600">600m 거리</span>에 있어요.
+  </p>
+
+  <img
+    src={`${process.env.PUBLIC_URL}/restaurant.png`}
+    alt="레스토랑 위치 이미지"
+    className="w-full max-w-md rounded-md shadow-md my-4"
+  />
+
+  <p className="text-sm text-gray-500">아래 버튼을 누르면 모바일에서 길찾기가 열려요!</p>
+
+  <div className="grid grid-cols-2 gap-4 w-full max-w-xs">
+    {/* 네이버맵 링크 */}
+    <a
+      href="https://naver.me/xIeXUCph"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center justify-center bg-green-500 text-white rounded-lg px-4 py-2 shadow hover:bg-green-600 transition"
+    >
+      <img
+        src={`${process.env.PUBLIC_URL}/navermap_icon.png`}
+        alt="네이버맵"
+        className="w-5 h-5 mr-2"
+      />
+      네이버 길찾기
+    </a>
+
+    {/* 카카오맵 링크 */}
+    <a
+      href="https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C537811%2C927642&rt1=&rt2=%EB%8B%A8%EA%B5%AD%EB%8C%80%ED%95%99%EA%B5%90&rtIds=%2C&rtTypes=%2C"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center justify-center bg-yellow-400 text-black rounded-lg px-4 py-2 shadow hover:bg-yellow-500 transition"
+    >
+      <img
+        src={`${process.env.PUBLIC_URL}/kakao_icon.png`}
+        alt="카카오맵"
+        className="w-5 h-5 mr-2"
+      />
+      카카오 길찾기
+    </a>
+  </div>
+
+  <p className="text-xs text-gray-400 mt-2">
+    * 레스토랑 위치는 예식장 인근 도보 8분 거리입니다.
+  </p>
+</section>
       {/* Section 3 - 성경 말씀 */}
       <section className="h-screen snap-start flex flex-col items-center justify-center bg-pink-100 px-8">
         <h2 className="text-2xl font-bold mb-4">💒 성경 말씀</h2>
         <p className="text-lg text-center">
           “하나님이 짝지어 주신 것을 사람이 나누지 못할지니라” (마태복음 19:6)
         </p>
-          <DailyVerse />
+        
       </section>
     </div>
   );
