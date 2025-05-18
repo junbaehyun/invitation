@@ -1,7 +1,10 @@
 import React, { useState, useRef ,useEffect} from 'react';
 
 
+import verses from './verses';
 
+const todayIndex = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 1)) / (1000 * 60 * 60 * 24)) % verses.length;
+const todayVerse = verses[todayIndex];
   
 // App 함수 바깥에 추가
 function Countdown({ targetDate }) {
@@ -247,38 +250,6 @@ useEffect(() => {
   </div>
 </section>
 
-{/* Section - 예식 타임라인 */}
-<section className="h-screen snap-start bg-white flex flex-col items-center justify-center px-6 py-12 text-center">
-  <h2 className="text-2xl font-bold text-pink-500 mb-8">예식 타임라인</h2>
-
-  <ul className="space-y-6 w-full max-w-md">
-    <li className="relative pl-6 text-left">
-      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">🕰️ 11:00</p>
-      <p className="text-lg text-gray-800 font-semibold">하객 입장 시작</p>
-    </li>
-
-    <li className="relative pl-6 text-left">
-      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">💒 11:30</p>
-      <p className="text-lg text-gray-800 font-semibold">결혼식 본식 시작</p>
-    </li>
-
-    <li className="relative pl-6 text-left">
-      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">📷 12:00</p>
-      <p className="text-lg text-gray-800 font-semibold">하객 기념 촬영</p>
-    </li>
-
-    <li className="relative pl-6 text-left">
-      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">🍽️ 12:30</p>
-      <p className="text-lg text-gray-800 font-semibold">피로연 및 식사</p>
-    </li>
-  </ul>
-
-  <p className="mt-10 text-sm text-gray-400">* 일정은 현장 사정에 따라 변경될 수 있습니다.</p>
-</section>
     <section className="h-screen snap-start bg-white px-6 py-10 flex flex-col items-center justify-center text-center space-y-6">
   <h2 className="text-3xl font-bold text-gray-800 mb-2">📍 오시는 길</h2>
 
@@ -310,47 +281,14 @@ useEffect(() => {
 <div className="mt-10 text-center">
   <p className="text-sm text-gray-600 font-medium mb-2">
     📌 <span className="text-pink-600 font-semibold">주차장은 다른 위치에 있어요</span>
+  
   </p>
-  <p className="text-xs text-gray-500 mb-1">아래로 내려 확인해주세요</p>
+  <p className="text-xs text-gray-500 mb-1">  “용서해 주세요 😢
+주차장은 예식장에서 도보 10분 거리예요.
+사랑은… 걷는 거니까요…🚶‍♀️🚶”</p>
   <div className="text-pink-400 text-2xl animate-bounce mt-1">↓</div>
 </div>
   </section>
-{/* Section - 주차 안내 */}
-<section className="h-screen snap-start bg-white px-6 py-10 flex flex-col items-center justify-center text-center">
-  <h2 className="text-2xl font-bold mb-6">🚗 주차 안내</h2>
-
-  {/* 안내 박스 */}
-  <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md text-left space-y-4">
-    <p className="text-base text-gray-800">
-      📍 <span className="font-semibold">서울 마포구 신수동 93-35</span><br />
-      해당 위치에 <span className="text-pink-500 font-bold">주차장이 따로</span> 마련되어 있습니다.
-    </p>
-
-    {/* 지도 앱 버튼 */}
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-      {/* Tmap */}
-      <a href="tmap://search?name=서울 마포구 신수동 93-35" className="flex flex-col items-center bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition">
-        <img src={`${process.env.PUBLIC_URL}/tmap_icon.png`} alt="Tmap" className="w-8 h-8 mb-1" />
-        <span className="text-sm font-medium">티맵</span>
-      </a>
-
-      {/* Kakao Navi */}
-      <a href="kakaomap://search?q=서울 마포구 신수동 93-35" className="flex flex-col items-center bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition">
-        <img src={`${process.env.PUBLIC_URL}/kakao_icon.png`} alt="Kakao" className="w-8 h-8 mb-1" />
-        <span className="text-sm font-medium">카카오내비</span>
-      </a>
-
-      {/* Naver */}
-      <a href="nmap://search?query=서울 마포구 신수동 93-35" className="flex flex-col items-center bg-gray-100 rounded-lg p-3 hover:bg-gray-200 transition">
-        <img src={`${process.env.PUBLIC_URL}/navermap_icon.png`} alt="Naver" className="w-8 h-8 mb-1" />
-        <span className="text-sm font-medium">네이버지도</span>
-      </a>
-    </div>
-  </div>
-
-  {/* 하단 안내 문구 */}
-  <p className="mt-6 text-xs text-gray-400">* 지도 앱을 눌러 바로 길찾기를 시작하세요.</p>
-</section>
 {/* Section - 주차 안내 (CarPlay 스타일) */}
 <section className="h-screen snap-start bg-white px-6 py-10 flex flex-col items-center justify-center text-center">
 <h2 className="text-2xl font-bold mb-4">🚗 주차 안내</h2>
@@ -400,6 +338,42 @@ useEffect(() => {
   <p className="mt-6 text-sm text-gray-400">* 지도 앱을 눌러 바로 길찾기를 시작하세요.</p>
 </section>
 
+
+{/* Section - 예식 타임라인 */}
+<section className="h-screen snap-start bg-white flex flex-col items-center justify-center px-6 py-12 text-center">
+  <h2 className="text-2xl font-bold text-pink-500 mb-8">예식 타임라인</h2>
+
+  <ul className="space-y-6 w-full max-w-md">
+    <li className="relative pl-6 text-left">
+      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
+      <p className="text-sm text-gray-500">🕰️ 11:00</p>
+      <p className="text-lg text-gray-800 font-semibold">하객 입장 시작</p>
+    </li>
+
+    <li className="relative pl-6 text-left">
+      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
+      <p className="text-sm text-gray-500">💒 11:30</p>
+      <p className="text-lg text-gray-800 font-semibold">결혼식 본식 시작</p>
+    </li>
+
+    <li className="relative pl-6 text-left">
+      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
+      <p className="text-sm text-gray-500">📷 12:00</p>
+      <p className="text-lg text-gray-800 font-semibold">하객 기념 촬영</p>
+    </li>
+
+    <li className="relative pl-6 text-left">
+      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
+      <p className="text-sm text-gray-500">🍽️ 12:30</p>
+      <p className="text-lg text-gray-800 font-semibold">피로연 및 식사</p>
+    </li>
+  </ul>
+
+  <p className="mt-10 text-sm text-gray-400">* 일정은 현장 사정에 따라 변경될 수 있습니다.</p>
+</section>
+
+
+  {/* 📍식당 가기 섹션 */}
 <section className="h-screen snap-start bg-white flex flex-col items-center justify-center px-6 text-center space-y-4">
   <h2 className="text-2xl font-bold text-orange-500">🍽️ 식사 안내</h2>
 
@@ -411,57 +385,62 @@ useEffect(() => {
   </p>
 
   <img
-    src={`${process.env.PUBLIC_URL}/restaurant.png`}
+    src={`${process.env.PUBLIC_URL}/restaurantmap.png`}
     alt="레스토랑 위치 이미지"
     className="w-full max-w-md rounded-md shadow-md my-4"
   />
 
   <p className="text-sm text-gray-500">아래 버튼을 누르면 모바일에서 길찾기가 열려요!</p>
 
-  <div className="grid grid-cols-2 gap-4 w-full max-w-xs">
-    {/* 네이버맵 링크 */}
-    <a
-      href="https://naver.me/xIeXUCph"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center justify-center bg-green-500 text-white rounded-lg px-4 py-2 shadow hover:bg-green-600 transition"
-    >
-      <img
-        src={`${process.env.PUBLIC_URL}/navermap_icon.png`}
-        alt="네이버맵"
-        className="w-5 h-5 mr-2"
-      />
-      네이버 길찾기
-    </a>
+  {/* 📍 길찾기 버튼 (네이버 & 카카오) */}
+<div className="grid grid-cols-2 gap-4 w-full max-w-xs mx-auto mt-6">
+  {/* 네이버맵 링크 */}
+  <a
+    href="https://naver.me/xIeXUCph"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center justify-center gap-2 bg-green-500 text-white rounded-lg px-4 py-3 shadow-md hover:bg-green-600 transition"
+  >
+    <img
+      src={`${process.env.PUBLIC_URL}/navermap_icon.png`}
+      alt="네이버맵"
+      className="w-5 h-5"
+    />
+    <span className="text-sm font-semibold">네이버 길찾기</span>
+  </a>
 
-    {/* 카카오맵 링크 */}
-    <a
-      href="https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C537811%2C927642&rt1=&rt2=%EB%8B%A8%EA%B5%AD%EB%8C%80%ED%95%99%EA%B5%90&rtIds=%2C&rtTypes=%2C"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center justify-center bg-yellow-400 text-black rounded-lg px-4 py-2 shadow hover:bg-yellow-500 transition"
-    >
-      <img
-        src={`${process.env.PUBLIC_URL}/kakao_icon.png`}
-        alt="카카오맵"
-        className="w-5 h-5 mr-2"
-      />
-      카카오 길찾기
-    </a>
-  </div>
+  {/* 카카오맵 링크 */}
+  <a
+    href="https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C537811%2C927642&rt1=&rt2=%EB%8B%A8%EA%B5%AD%EB%8C%80%ED%95%99%EA%B5%90&rtIds=%2C&rtTypes=%2C"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center justify-center gap-2 bg-yellow-400 text-black rounded-lg px-4 py-3 shadow-md hover:bg-yellow-500 transition"
+  >
+    <img
+      src={`${process.env.PUBLIC_URL}/kakaomap_icon.png`}
+      alt="카카오맵"
+      className="w-5 h-5"
+    />
+    <span className="text-sm font-semibold">카카오 길찾기</span>
+  </a>
+</div>
 
   <p className="text-xs text-gray-400 mt-2">
-    * 레스토랑 위치는 예식장 인근 도보 8분 거리입니다.
+    * 🐾 “조금만 걸으면 맛있는 식사가 기다려요! (운동도 되고 일석이조✨)”
   </p>
 </section>
+
+
       {/* Section 3 - 성경 말씀 */}
+  
+
       <section className="h-screen snap-start flex flex-col items-center justify-center bg-pink-100 px-8">
-        <h2 className="text-2xl font-bold mb-4">💒 성경 말씀</h2>
-        <p className="text-lg text-center">
-          “하나님이 짝지어 주신 것을 사람이 나누지 못할지니라” (마태복음 19:6)
-        </p>
+        
+      <h2 className="text-xl font-semibold text-pink-600 mb-4">💒 오늘의 말씀</h2>
+  <p className="text-sm text-gray-800 italic">{todayVerse}</p>
         
       </section>
+
     </div>
   );
 }
