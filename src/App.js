@@ -193,14 +193,14 @@ useEffect(() => {
       </section>
 
       {/* Section 1 - 이름 입력 */}
-      <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-6">
+      <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-6 mx-2">
 
        {/* 이미지 상단 고정 */}
-  <img
-    src={`${process.env.PUBLIC_URL}/og-image.jpg`}
-    alt="레터 이미지"
-    className="w-full max-w-md mb-6 rounded-lg shadow-md mt-2"
-  />
+        <img
+          src={`${process.env.PUBLIC_URL}/og-image.jpg`}
+          alt="레터 이미지"
+          className="w-full max-w-md mb-6 rounded-lg shadow-md mt-2 "
+        />
       
       
 
@@ -222,7 +222,7 @@ useEffect(() => {
           </>
         ) : (
           
-          <div className="mt-6 text-lg text-gray-700">
+          <div className="mt-6 text-lg text-gray-700 px-3">
             {messages[name.trim()] || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`}
           </div>
         )}
@@ -412,13 +412,13 @@ useEffect(() => {
 
     <li className="relative pl-6 text-left">
       <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">📷 12:00</p>
+      <p className="text-sm text-gray-500">📷 12:15</p>
       <p className="text-lg text-gray-800 font-semibold">하객 기념 촬영</p>
     </li>
 
     <li className="relative pl-6 text-left">
       <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">🍽️ 12:30</p>
+      <p className="text-sm text-gray-500">🍽️ 12:50</p>
       <p className="text-lg text-gray-800 font-semibold">피로연 및 식사</p>
     </li>
   </ul>
@@ -538,8 +538,8 @@ useEffect(() => {
 
   <div className="text-sm text-left max-w-xl space-y-4 bg-white p-6 rounded-xl shadow-md">
    <p>
-      결혼준비로 오락가락하는 마음으로 힘들었지만 포기하지 않고 함께 기도하며 인내해 주셨던 분들:<br />
-      <strong>황승수 목사님, 이지선 사모님, 임수경 선교사님, 한수아 선교사님</strong>
+      특별히 저희의 오락가락하는 마음과 감정으로 힘드셨던 분들:<br />
+      <strong>황승수 목사님, 정지연 사모님, 임하경 선교사님, 한수아 선교사님</strong>
     </p>
     <p>예배&예식 장소 지원: <br /> 꿈교회공동체</p>
     <p>
@@ -627,6 +627,7 @@ useEffect(() => {
     💌 감사한 마음 담아: 준배 & 숄판 올림 <br/>
     🐞 오류 문의: <a href="tel:01071978438" className="underline">010-7197-8438</a>
   </p>
+  
 </section>
     </div>
   );
