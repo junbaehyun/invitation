@@ -55,7 +55,7 @@ function App() {
 
   const imageRef = useRef(null);
   const [visible, setVisible] = useState(false);
-
+  const blockRef = useRef(null);
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -214,13 +214,13 @@ useEffect(() => {
 {/* Section 1 - 초대합니다 */}
       
   
-  return (
+
     <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-2 mx-2">
       {/* 상단 이미지 */}
       <img
         src={`${process.env.PUBLIC_URL}/og-image.jpg`}
         alt="레터 이미지"
-        className="w-full max-w-md mb-6 rounded-lg shadow-md mt-2"
+        className="w-full max-w-md mb-2 rounded-lg shadow-md mt-2"
       />
 
       {/* 초청문 이미지 */}
@@ -233,15 +233,18 @@ useEffect(() => {
         }`}
       />
     </section>
-  );
+  
 
 {/* Section 2 - 인삿말 & D-Day */}
 
 <img
   src={`${process.env.PUBLIC_URL}/wedding.png`}
   alt="웨딩 장식"
-  className="w-full max-h-96 object-cover rounded-lg shadow mb-6"
-/>
+  ref={imageRef}
+        className={`w-full max-w-md rounded-lg shadow-md transform transition-all duration-1000 ease-out ${
+          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
+      />
 
 <section className="h-screen snap-start bg-white flex flex-col items-center justify-center text-center px-6 py-10 space-y-6 overflow-y-auto">
   {/* 인삿말 */}
@@ -252,7 +255,17 @@ useEffect(() => {
   </div>
 
   {/* 스크롤 가능한 고백문 영역 */}
-  <div className="max-w-lg w-full h-[700px] overflow-y-auto bg-pink-50 bg-opacity-70 rounded-xl p-4 text-sm text-left text-gray-700 leading-relaxed shadow-inner border border-pink-200">
+
+  
+
+    
+      <div
+      ref={blockRef}
+      className={`max-w-lg w-full h-[700px] overflow-y-auto bg-pink-50 bg-opacity-70 rounded-xl p-4 text-sm text-left text-gray-700 leading-relaxed shadow-inner border border-pink-200 transform transition-all duration-1000 ease-out ${
+        visible ? 'opacity-0 translate-y-10' : 'opacity-`100 translate-y-0'
+      }`}
+    >
+    
     <p>
       언어도 문화도 성격도<br />
       카자흐스탄과 한국처럼<br />
