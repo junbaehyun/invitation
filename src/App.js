@@ -1,11 +1,7 @@
-import React, { useState, useRef ,useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import dayjs from 'dayjs';
+import DailyDevotional from './DailyDevotional';
 
-
-import verses from './verses';
-
-const todayIndex = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 1)) / (1000 * 60 * 60 * 24)) % verses.length;
-const todayVerse = verses[todayIndex];
-  
 // App 함수 바깥에 추가
 function Countdown({ targetDate }) {
   const [timeLeft, setTimeLeft] = useState({});
@@ -48,6 +44,15 @@ function App() {
   const [submitted, setSubmitted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
+  const [now, setNow] = useState(dayjs());
+
+  // 실시간 시간 갱신
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(dayjs());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubmit = () => {
     setSubmitted(true);
@@ -64,6 +69,8 @@ function App() {
       }
     }
   };
+
+  
 
   const getDday = () => {
   const today = new Date();
@@ -430,17 +437,63 @@ useEffect(() => {
   </p>
 </section>
 
-
       {/* Section 3 - 성경 말씀 */}
+{/* Section 3 - 성경 말씀 */}
+<section className="h-screen snap-start bg-pink-100 flex flex-col items-center justify-center px-6 text-center">
+  {/* 날짜와 시간 */}
+  <p className="text-sm text-gray-500 mb-2">
+    {now.format('dddd, MMMM D, YYYY • HH:mm:ss')}
+  </p>
+
+  <h2 className="text-2xl font-semibold mb-4">📖 Today’s Devotional</h2>
+
+  {/* 말씀 내용 */}
+  <div className="bg-white rounded-lg shadow-md max-w-lg w-full h-[60vh] overflow-y-auto px-5 py-4 text-left text-[15px] leading-relaxed text-brownText font-myeongjo">
+    <DailyDevotional />
+  </div>
+
+  {/* 출처 */}
+  <p className="mt-4 text-xs text-gray-500 italic">
+    From <strong>“Jesus Calling”</strong> by Sarah Young
+  </p>
+</section>
+
+{/* 감사의 말씀 섹션 */}
+<section className="min-h-screen snap-start bg-[#FFF7F0] flex flex-col items-center justify-center px-6 py-12 text-center text-brownText">
+  <h2 className="text-2xl font-bold text-orange-500 mb-6">💝 감사의 말씀</h2>
   
+  <p className="text-sm text-gray-700 leading-relaxed max-w-xl mb-8">
+    결혼 준비로 오락가락하는 마음으로 힘들었지만,<br/>
+    포기하지 않고 함께 기도하며 인내해 주신 분들께 진심으로 감사드립니다.
+  </p>
 
-      <section className="h-screen snap-start flex flex-col items-center justify-center bg-pink-100 px-8">
-        
-      <h2 className="text-xl font-semibold text-pink-600 mb-4">💒 오늘의 말씀</h2>
-  <p className="text-sm text-gray-800 italic">{todayVerse}</p>
-        
-      </section>
+  <div className="text-sm text-left max-w-xl space-y-4 bg-white p-6 rounded-xl shadow-md">
+    <p><strong>기도로 함께해주신 분들:</strong> 황승수 목사님, 이지선 사모님, 임수경 선교사님, 한수아 선교사님</p>
+    <p><strong>디자인 및 제작 지원:</strong> 박은옥 전도사님 (종이 청첩장, 예복 지원)</p>
+    <p><strong>스타일링 지원:</strong> 집사님 (메이크업, 스타일)</p>
+    <p><strong>축가:</strong> 멀리서 와주신 멋진 사욱형님 🎤</p>
+    <p><strong>사회:</strong> 정민아... 호주 티켓 사는 거 진심이야...? 🎤</p>
+    <p><strong>신앙의 여정:</strong> 제충만 형님, 신성교회 형제 자매들 (호길, 진영)</p>
+    <p><strong>양육:</strong> 김향래 어머님, 김주형 목사님</p>
+    <p><strong>기도로 빚어주신 분들:</strong> 진기현 목사님, 꿈교회 공동체</p>
+    <p><strong>방글라데시 난민촌 사역:</strong> 김해성 목사님</p>
+    <p><strong>결혼 준비 도우미:</strong> 다혜 전도사님 (예레미야 온맘)</p>
+    <p><strong>브로맨스 형제들:</strong> 정훈, 수보, 수빈, 순녕, 재원</p>
+    <p><strong>아름다운 상을 나눠주신 선생님들:</strong> 효진쌤, 재림쌤, 혜윤쌤, 시은쌤</p>
+    <p><strong>전국 농협 통역 어벤져스:</strong> 신윤희 팀장님, 유진 강사님, 세진님, 은화 선배님, 정훈 선배님</p>
+    <p><strong>Special thanks to:</strong> Shakir 🌏</p>
+    <p><strong>그리고 말하지 못했지만, 뒤에서 지지해주신 모든 분들께…</strong><br/>진심으로 감사합니다. 여러분이 있었기에 오늘의 우리가 있습니다.</p>
+  </div>
 
+  <p className="text-xs text-gray-500 mt-6 italic">
+    이 모든 것을 주관하신 분: <strong>하나님</strong>
+  </p>
+
+  <p className="text-sm mt-4 text-gray-400">
+    💌 감사한 마음 담아: 준배 & 숄판 올림 <br/>
+    🐞 오류 문의: <a href="tel:01071978438" className="underline">010-7197-8438</a>
+  </p>
+</section>
     </div>
   );
 }
