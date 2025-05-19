@@ -229,7 +229,7 @@ useEffect(() => {
         src={`${process.env.PUBLIC_URL}/invitated.png`}
         alt="초청문 이미지"
         className={`w-full max-w-md rounded-lg shadow-md transform transition-all duration-1000 ease-out ${
-          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          visible ? 'opacity-0 translate-y-10' : 'opacity-100 translate-y-0'
         }`}
       />
     </section>
