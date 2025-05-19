@@ -302,6 +302,14 @@ useEffect(() => {
 <p className="text-base text-gray-700 mb-4">
   📍 <span className="font-semibold">서울 마포구 신수동 93-35</span>
 </p>
+{/* 발렛 파킹 담당자 연락처 */}
+<div className="mt-1 flex items-center justify-center gap-2 text-sm text-gray-700">
+  <span className="text-lg">🅿️</span>
+  <span className="font-semibold">발렛 파킹 담당자:</span>
+  <a href="tel:01071978438" className="text-blue-600 underline hover:text-blue-800">
+    010-7197-8438
+  </a>
+</div>
 
 <img
   src={`${process.env.PUBLIC_URL}/parkingimg.png`}
@@ -347,7 +355,7 @@ useEffect(() => {
 
 
 {/* Section - 예식 타임라인 */}
-<section className="h-screen snap-start bg-white flex flex-col items-center justify-center px-6 py-12 text-center">
+<section className="snap-start bg-white flex flex-col items-center justify-start px-6 py-12 text-center min-h-screen">
   <h2 className="text-2xl font-bold text-pink-500 mb-8">예식 타임라인</h2>
 
   <ul className="space-y-6 w-full max-w-md">
@@ -376,9 +384,31 @@ useEffect(() => {
     </li>
   </ul>
 
-  <p className="mt-10 text-sm text-gray-400">* 일정은 현장 사정에 따라 변경될 수 있습니다.</p>
-</section>
 
+  {/* 🍽️ 식사 예약 안내 */}
+  <div className="mt-4 bg-pink-50 border border-pink-200 p-6 rounded-xl shadow max-w-md w-full">
+    <h3 className="text-lg font-bold text-pink-600 flex items-center justify-center gap-2 mb-2">
+      🍽️ 식사 자리 예약하기
+    </h3>
+    <p className="text-sm text-gray-700 leading-relaxed mb-3">
+      <strong>~ 7월 1일까지</strong> 참석여부 부탁드려요!<br />
+      한 분 한 분의 소중한 이름을 테이블에 적어<br />
+      정성껏 준비하려 합니다.<br />
+      <span className="font-semibold text-pink-500">꼭 아래 구글폼을 제출해주세요!</span>
+    </p>
+    <a
+      href="https://docs.google.com/forms/d/1T74BPurt7zwJpKC88eKwCThGynW9n4IVtmSYo-503uQ/edit"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block bg-pink-500 text-white px-6 py-2 rounded shadow hover:bg-pink-600 transition"
+    >
+      ✍️ 참석여부 작성
+    </a>
+    
+
+  </div>
+    <p className="mt-10 text-sm text-gray-400">* 일정은 현장 사정에 따라 변경될 수 있습니다.</p>
+</section>
 
   {/* 📍식당 가기 섹션 */}
 <section className="h-screen snap-start bg-white flex flex-col items-center justify-center px-6 text-center space-y-4">
@@ -468,23 +498,88 @@ useEffect(() => {
   </p>
 
   <div className="text-sm text-left max-w-xl space-y-4 bg-white p-6 rounded-xl shadow-md">
-    <p><strong>기도로 함께해주신 분들:</strong> 황승수 목사님, 이지선 사모님, 임수경 선교사님, 한수아 선교사님</p>
-    <p><strong>디자인 및 제작 지원:</strong> 박은옥 전도사님 (종이 청첩장, 예복 지원)</p>
-    <p><strong>스타일링 지원:</strong> 집사님 (메이크업, 스타일)</p>
-    <p><strong>축가:</strong> 멀리서 와주신 멋진 사욱형님 🎤</p>
-    <p><strong>사회:</strong> 정민아... 호주 티켓 사는 거 진심이야...? 🎤</p>
-    <p><strong>신앙의 여정:</strong> 제충만 형님, 신성교회 형제 자매들 (호길, 진영)</p>
-    <p><strong>양육:</strong> 김향래 어머님, 김주형 목사님</p>
-    <p><strong>기도로 빚어주신 분들:</strong> 진기현 목사님, 꿈교회 공동체</p>
-    <p><strong>방글라데시 난민촌 사역:</strong> 김해성 목사님</p>
-    <p><strong>결혼 준비 도우미:</strong> 다혜 전도사님 (예레미야 온맘)</p>
-    <p><strong>브로맨스 형제들:</strong> 정훈, 수보, 수빈, 순녕, 재원</p>
-    <p><strong>아름다운 상을 나눠주신 선생님들:</strong> 효진쌤, 재림쌤, 혜윤쌤, 시은쌤</p>
-    <p><strong>전국 농협 통역 어벤져스:</strong> 신윤희 팀장님, 유진 강사님, 세진님, 은화 선배님, 정훈 선배님</p>
-    <p><strong>Special thanks to:</strong> Shakir 🌏</p>
-    <p><strong>그리고 말하지 못했지만, 뒤에서 지지해주신 모든 분들께…</strong><br/>진심으로 감사합니다. 여러분이 있었기에 오늘의 우리가 있습니다.</p>
-  </div>
-
+   <p>
+      결혼준비로 오락가락하는 마음으로 힘들었지만 포기하지 않고 함께 기도하며 인내해 주셨던 분들:<br />
+      <strong>황승수 목사님, 이지선 사모님, 임수경 선교사님, 한수아 선교사님</strong>
+    </p>
+    <p>예배&예식 장소 지원: <br /> 꿈교회공동체</p>
+    <p>
+      종이 청첩장 디자인 및 제작 비용 지원:<br />
+      <strong>박은옥 전도사님</strong>
+    </p>
+    <p>
+      신랑 신부 어머님 예복:<br />
+      <strong>박은옥 전도사님</strong>
+    </p>
+    <p>결혼식 & 웨딩 사진 촬영 및 지원: <br /> 호길형님</p>
+    <p>제주도 신혼여행 웨딩사진 촬영 및 숙박 지원: <br /> 녕인누나 </p>
+    <p>
+      신랑 신부 메이크업 및 스타일 비용 지원:<br />
+      <strong>집사님</strong>
+    </p>
+    <p>
+      축가: <br />
+      <strong> 가수 & 연예인 - 완전 멋진 상욱형님 🎤</strong>
+    </p>
+    <p>예식 및 교회 안내: <br/> 김다혜전도사님, 용찬형제, 정훈형제, 순녕형제, 재원형제, </p>
+    <p>
+      사회자:<br />
+      <strong>진짜 호주 왕복 티켓 사서 사회자 볼꺼야 정민아??? </strong>
+    </p>
+    <p>
+      처음 교회로 인도해 주신 분:<br />
+      <strong>제충만 형님</strong>
+    </p>
+    <p>
+      아름다운 첫 공동체를 경험케 해주신 신성교회 형님 누나:<br />
+      <strong>호길, 진영</strong>
+    </p>
+    <p>
+      준배 사람 만들어 주신 분들:<br />
+      <strong>김향래 어머님, 김주형 목사님</strong>
+    </p>
+    <p>
+      기도로 빚어 주신 분들:<br />
+      <strong>진기현 목사님, 꿈교회 공동체</strong>
+    </p>
+    <p>
+      방글라데시 난민촌에서 예수님의 손과 발이 되는 삶을 가르쳐 주신 분:<br />
+      <strong>김해성 목사님</strong>
+    </p>
+    <p>
+      청년부 리더로 결혼 준비도 도와주신:<br />
+      <strong>예레미야 온맘다혜 전도사님</strong>
+    </p>
+    <p>
+   🔥ball 친구들:
+  <br />
+  <strong>재의, 용석, 용현, 윤석, 승환, 성한, 석훈, 동영, 대희, 기환</strong><br />
+  
+</p>
+    <p>
+      꿈교회 남자청년부 브로멘스 형제들:<br />
+      <strong>정훈, 수보, 수빈, 순녕, 재원</strong><br />
+      (브로맨스 은혜 넘침 😎 하나님만 본다… 이젠 안녕)
+    </p>
+    <p>
+      아름다운 상을 나눠주신 분들:<br />
+      <strong>효진쌤, 재림쌤, 혜윤쌤, 시은쌤</strong>
+    </p>
+    <p>
+      전국 농협 외국어 통역 어벤져스 선배님들:<br />
+      <strong>멋진 신윤희 팀장님, 자책마요 완벽해요 유진 강사님, 캡틴 세진, 신우회 리더 은화 선배님, 정훈 선배님</strong>
+    </p>
+    <p>
+      And good friends:<br />
+      <strong>Shakir 🌍</strong>
+    </p>
+    <p className="italic text-sm text-gray-600">
+      여기서 다 말 할 수 없었던 분들은,<br />
+      빛도 그늘도 없는 곳에서 남몰래 지지해주시고 기도해주셨던 감사한 분들입니다.<br />
+      여러분들이 계셨기 때문에 오늘의 제가 있습니다.<br />
+      <strong>감사랑합니다!</strong>
+    </p>
+</div>
   <p className="text-xs text-gray-500 mt-6 italic">
     이 모든 것을 주관하신 분: <strong>하나님</strong>
   </p>
