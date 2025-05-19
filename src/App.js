@@ -53,6 +53,24 @@ function App() {
   const [typingIndex, setTypingIndex] = useState(0);
   const typingInterval = useRef(null);
 
+  const imageRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setVisible(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+
+    if (imageRef.current) observer.observe(imageRef.current);
+
+    return () => {
+      if (imageRef.current) observer.unobserve(imageRef.current);
+    };
+  }, []);
+
 
   // 실시간 시간 갱신
   useEffect(() => {
@@ -192,41 +210,31 @@ useEffect(() => {
         <div className="absolute bottom-6 animate-bounce text-pink-300 text-2xl">↓</div>
       </section>
 
-      {/* Section 1 - 이름 입력 */}
-      <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-6 mx-2">
 
-       {/* 이미지 상단 고정 */}
-        <img
-          src={`${process.env.PUBLIC_URL}/og-image.jpg`}
-          alt="레터 이미지"
-          className="w-full max-w-md mb-6 rounded-lg shadow-md mt-2 "
-        />
+{/* Section 1 - 초대합니다 */}
       
-      
+  
+  return (
+    <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-2 mx-2">
+      {/* 상단 이미지 */}
+      <img
+        src={`${process.env.PUBLIC_URL}/og-image.jpg`}
+        alt="레터 이미지"
+        className="w-full max-w-md mb-6 rounded-lg shadow-md mt-2"
+      />
 
-        {!submitted ? (
-          <>
-            <input
-              type="text"
-              placeholder="성함을 입력해주세요"
-              className="border border-pink-300 rounded px-4 py-2 mb-4 w-full max-w-xs"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <button
-              onClick={handleSubmit}
-              className="bg-pink-500 text-white px-6 py-2 rounded hover:bg-pink-600"
-            >
-              확인
-            </button>
-          </>
-        ) : (
-          
-          <div className="mt-6 text-lg text-gray-700 px-3">
-            {messages[name.trim()] || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`}
-          </div>
-        )}
-      </section>
+      {/* 초청문 이미지 */}
+      <img
+        ref={imageRef}
+        src={`${process.env.PUBLIC_URL}/invitated.png`}
+        alt="초청문 이미지"
+        className={`w-full max-w-md rounded-lg shadow-md transform transition-all duration-1000 ease-out ${
+          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
+      />
+    </section>
+  );
+
 {/* Section 2 - 인삿말 & D-Day */}
 
 <img
@@ -234,23 +242,52 @@ useEffect(() => {
   alt="웨딩 장식"
   className="w-full max-h-96 object-cover rounded-lg shadow mb-6"
 />
-<section className="h-screen snap-start bg-white flex flex-col items-center justify-center text-center px-6 py-10 space-y-6 ">
-  {/*  인삿말 */}
+
+<section className="h-screen snap-start bg-white flex flex-col items-center justify-center text-center px-6 py-10 space-y-6 overflow-y-auto">
+  {/* 인삿말 */}
   <div className="max-w-lg">
-    <p className="text-base leading-relaxed text-gray-700">
-      살랑이는 바람결에<br />
-      사랑이 묻어나는 계절입니다.<br /><br />
-      여기 곱고 예쁜 두 사람이 사랑을 맺어<br />
-      인생의 반려자가 되려 합니다.
-    </p>
+    
     <div className="w-6 h-0.5 bg-orange-300 my-4 mx-auto"></div>
-    <p className="text-sm text-gray-800">신랑 현준배 · 신부 숄판</p>
+    <p className="text-sm text-gray-800">신랑 현준배 · 신부 살타예바 숄판</p>
   </div>
 
-  {/* Save the Date 타이틀 */}
-  <h2 className="text-orange-400 font-semibold text-lg mt-10">Save the Date</h2>
+  {/* 스크롤 가능한 고백문 영역 */}
+  <div className="max-w-lg w-full h-[700px] overflow-y-auto bg-pink-50 bg-opacity-70 rounded-xl p-4 text-sm text-left text-gray-700 leading-relaxed shadow-inner border border-pink-200">
+    <p>
+      언어도 문화도 성격도<br />
+      카자흐스탄과 한국처럼<br />
+      어쩌면 우린 만날 수 없었습니다.<br /><br />
+      나의 결핍은 욕구충족에 메말랐고<br />
+      나의 욕망은 타인을 소비했으며<br />
+      사랑, 그 사이는 너무 멀었습니다.<br />
+      그렇게 캄캄한 어둠만 혼돈했습니다.<br /><br />
 
-  {/* D-Day 카운트다운 */}
+      그런데 상관 없는 나를 인내하고 기다려주고<br />
+      기도해 주는 선교사님, 목사님, 교회 공동체를 통해<br />
+      어렴풋이 예수님의 십자가 구원이 조금씩 보였습니다.<br /><br />
+
+      세상에서 경험하지 못했던<br />
+      따스함과 책임감과 성실함은 위로가 되었고<br />
+      불안했던 나는 조금씩 웃을 수 있었습니다.<br /><br />
+
+      이제 하나님 안에서 담대함을 얻은 나는<br />
+      온전한 나의 삶을 삽니다.<br /><br />
+
+      주께서 허락하신 새로운 소원을 가지고<br />
+      서로가 용기 있게 만날 수 있습니다.<br /><br />
+
+      그렇게 닿을 수 없던 우리가 십자가로 주님을,<br />
+      만날 수 없던 우리가 비로소 사랑하기로 결심합니다.<br /><br />
+
+      그렇게 너와 내가 예수님을,<br />
+      서로를 만나<br />
+      하나님 안에서 서로를 사랑할 것을 약속합니다.
+    </p>
+  </div>
+
+  {/* Save the Date */}
+  <h2 className="text-orange-400 font-semibold text-lg mt-8">Save the Date</h2>
+
   <Countdown targetDate="2025-07-12T11:30:00" />
 
   {/* 하단 문장 */}
@@ -506,44 +543,66 @@ useEffect(() => {
   </p>
 </section>
 
-      {/* Section 3 - 성경 말씀 */}
-{/* Section 3 - 성경 말씀 */}
-<section className="h-screen snap-start bg-pink-100 flex flex-col items-center justify-center px-6 text-center">
-  {/* 날짜와 시간 */}
-  <p className="text-sm text-gray-500 mb-2">
-    {now.format('dddd, MMMM D, YYYY • HH:mm:ss')}
-  </p>
+    
 
-  <h2 className="text-2xl font-semibold mb-4">📖 Today’s Devotional</h2>
+  <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-10 mx-2">
 
-  {/* 말씀 내용 */}
-  <div className="bg-white rounded-lg shadow-md max-w-lg w-full h-[60vh] overflow-y-auto px-5 py-4 text-left text-[15px] leading-relaxed text-brownText font-myeongjo">
-    <DailyDevotional />
-  </div>
+    <img
+  src={`${process.env.PUBLIC_URL}/verse.png`}
+  alt="웨딩 장식"
+  className="w-full max-h-96 object-cover rounded-lg shadow mb-6"
+/>
 
-  {/* 출처 */}
-  <p className="mt-4 text-xs text-gray-500 italic">
-    From <strong>“Jesus Calling”</strong> by Sarah Young
-  </p>
-</section>
+      
+      
+
+        {!submitted ? (
+          <>
+            <input
+              type="text"
+              placeholder="성함을 입력해주세요"
+              className="border border-pink-300 rounded px-4 py-2 mb-4 w-full max-w-xs"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <button
+              onClick={handleSubmit}
+              className="bg-pink-500 text-white px-6 py-2 rounded hover:bg-pink-600"
+            >
+              확인
+            </button>
+          </>
+        ) : (
+          
+          <div className="mt-6 text-lg text-gray-700 px-3">
+            {messages[name.trim()] || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`}
+          </div>
+        )}
+      </section>
 
 {/* 감사의 말씀 섹션 */}
 <section className="min-h-screen snap-start bg-[#FFF7F0] flex flex-col items-center justify-center px-6 py-12 text-center text-brownText">
   <h2 className="text-2xl font-bold text-orange-500 mb-6">💝 감사의 말씀</h2>
   
   <p className="text-sm text-gray-700 leading-relaxed max-w-xl mb-8">
-    결혼 준비로 오락가락하는 마음으로 힘들었지만,<br/>
+    이 곳에 오기 까지 쉽지 않았지만,<br/>
     포기하지 않고 함께 기도하며 인내해 주신 분들께 진심으로 감사드립니다.
   </p>
 
   <div className="text-sm text-left max-w-xl space-y-4 bg-white p-6 rounded-xl shadow-md">
    <p>
       특별히 저희의 오락가락하는 마음과 감정으로 힘드셨던 분들:<br />
-      <strong>황승수 목사님, 정지연 사모님, 임하경 선교사님, 한수아 선교사님</strong>
+      <strong> 임하경 선교사님, 한수아 선교사님, 황승수 목사님, 정지연 사모님</strong>
     </p>
-    <p>예배&예식 장소 지원: <br /> 꿈교회공동체</p>
+    
+    <p>특별히 인고의 시간을 견디며 숄판의 배우자를 위해 오~랜 시간 기도해 주시며 함께해 주신 분들: <br />
+    김계원 선생님, 이정미 선생님 </p> 
+    <p> 숄판의 배우자를 위해 기도 하다하다 지쳐 쓰러질뻔 했던 분이 몇 분 계시다는 소문이.. </p>
+  
+    <p>숄판 & 준배' 예비 부부 양육: <br />  임하경 선교사님, 한수아 선교사님, 황승수 목사님, 정지연 사모님 </p>
+      <p>예배&예식 장소 지원: <br /> 꿈교회공동체</p>
     <p>
-      종이 청첩장 디자인 및 제작 비용 지원:<br />
+      청첩장, 예배 순서지 디자인 및 제작 지원:<br />
       <strong>박은옥 전도사님</strong>
     </p>
     <p>
@@ -553,8 +612,8 @@ useEffect(() => {
     <p>결혼식 & 웨딩 사진 촬영 및 지원: <br /> 호길형님</p>
     <p>제주도 신혼여행 웨딩사진 촬영 및 숙박 지원: <br /> 녕인누나 </p>
     <p>
-      신랑 신부 메이크업 및 스타일 비용 지원:<br />
-      <strong>집사님</strong>
+      신랑, 신부, 어머님 메이크업 및 스타일 지원:<br />
+      <strong>봄애 집사님</strong>
     </p>
     <p>
       축가: <br />
@@ -566,12 +625,12 @@ useEffect(() => {
       <strong>진짜 호주 왕복 티켓 사서 사회자 볼꺼야 정민아??? </strong>
     </p>
     <p>
-      처음 교회로 인도해 주신 분:<br />
+      처음 하나님께로 인도해 주신 분:<br />
       <strong>제충만 형님</strong>
     </p>
     <p>
-      아름다운 첫 공동체를 경험케 해주신 신성교회 형님 누나:<br />
-      <strong>호길, 진영</strong>
+     살며 아름다운 첫 믿음의 공동체를 경험케 해주신 형님 누님 :<br />
+      <strong>호길, 진영, 주희, 충만 </strong>
     </p>
     <p>
       준배 사람 만들어 주신 분들:<br />
@@ -602,11 +661,11 @@ useEffect(() => {
     </p>
     <p>
       아름다운 상을 나눠주신 분들:<br />
-      <strong>효진쌤, 재림쌤, 혜윤쌤, 시은쌤</strong>
+      <strong>효진쌤, 재림쌤, 혜윤쌤, 시은쌤, 영현쌤, 은지쌤, 가람쌤,</strong>
     </p>
     <p>
       전국 농협 외국어 통역 어벤져스 선배님들:<br />
-      <strong>멋진 신윤희 팀장님, 자책마요 완벽해요 유진 강사님, 캡틴 세진, 신우회 리더 은화 선배님, 정훈 선배님</strong>
+      <strong>멋진 신윤희 팀장님, 자책마요 완벽해요 유진 강사님, 캡틴 세진, 신우회 리더 은화 선배님, 정훈 선배님, 현진 선배, 박미화</strong>
     </p>
     <p>
       And good friends:<br />
@@ -625,9 +684,29 @@ useEffect(() => {
 
   <p className="text-sm mt-4 text-gray-400">
     💌 감사한 마음 담아: 준배 & 숄판 올림 <br/>
-    🐞 오류 문의: <a href="tel:01071978438" className="underline">010-7197-8438</a>
   </p>
   
+</section>
+
+  {/* Section 3 - 성경 말씀 */}
+{/* Section 3 - 성경 말씀 */}
+<section className="h-screen snap-start bg-pink-100 flex flex-col items-center justify-center px-6 text-center">
+  {/* 날짜와 시간 */}
+  <p className="text-sm text-gray-500 mb-2">
+    {now.format('dddd, MMMM D, YYYY • HH:mm:ss')}
+  </p>
+
+  <h2 className="text-2xl font-semibold mb-4">📖 Today’s Devotional</h2>
+
+  {/* 말씀 내용 */}
+  <div className="bg-white rounded-lg shadow-md max-w-lg w-full h-[60vh] overflow-y-auto px-5 py-4 text-left text-[15px] leading-relaxed text-brownText font-myeongjo">
+    <DailyDevotional />
+  </div>
+
+  {/* 출처 */}
+  <p className="mt-4 text-xs text-gray-500 italic">
+    From <strong>“Jesus Calling”</strong> by Sarah Young
+  </p>
 </section>
     </div>
   );
