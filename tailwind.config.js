@@ -4,6 +4,15 @@ content: ["./src/**/*.{js,jsx,ts,tsx}"],
 
   theme: {
       extend: {
+        keyframes: {
+        typing: {
+          'from': { width: '0' },
+          'to': { width: '100%' }
+        },
+        blink: {
+          '50%': { 'border-color': 'transparent' }
+        }
+      },
     backgroundImage: {
 paper:  "url('/public/paper-bg.png')", // ✅ public 폴더 기준으로 사용
 },
@@ -18,6 +27,8 @@ paper:  "url('/public/paper-bg.png')", // ✅ public 폴더 기준으로 사용
       'spin-slow': 'spin 4s linear infinite',
     fadeInUp: 'fadeInUp 1.2s ease-out forwards',
     fadeInDown: 'fadeInDown 1.2s ease-out forwards',
+      typing: 'typing 5s steps(40, end) forwards',
+        blink: 'blink 1s step-end infinite'
   },
   keyframes: {
     fadeInUp: {
