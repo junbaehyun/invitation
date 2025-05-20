@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import dayjs from 'dayjs';
 import DailyDevotional from './DailyDevotional';
-
+import messages from './message';
 
 
 // App 함수 바깥에 추가
@@ -56,6 +56,10 @@ function App() {
   const imageRef = useRef(null);
   const [visible, setVisible] = useState(false);
   const blockRef = useRef(null);
+
+ const selected = messages[name.trim()];
+const messageText = selected?.text || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`;
+const messageImage = selected?.image; 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -141,17 +145,6 @@ useEffect(() => {
 
 
 
-  const messages = {
-    "최용현": "용현아, 중학교때 함께 공부방가고, 공부방 가는 널 꼬셔서 PC방으로 데려가고, 술 먹자고 선동하고 그럼에도 불구하고 훌륭한 노무사가 되다니 역시 될놈은 되는 거다 ㅋㅋ 그리고 이제는 서로의 결혼을 축하해 주는 날이 오게 됐네, 진심으로 결혼 축하해. 하필 카작가고 난 뒤라니, 축복하며 눈물 흘릴 각이였는데. 나의 삶에 많은 시간을 너와 함께 했고, 너의 선한 양심은 내게 자산이 되고 오늘의 내가 될 수 있게 해주었어. 늘 좋은 친구로 부족한 내옆에 함께해 주어서 고맙다. 결혼, 진심으로 촉복해! 그리고, 내 결혼식에는 못오지만 너의 마음 다 받겠으! 고맙다!  " ,
-    "김용석": "2006년, 약 20년 전에 네가 내게 준 편지를 읽어봐, '준배야 안녕 나 용석이 ~ 너 2월 17일 생일 이였구나 ... 난 몰랐어 ㅠ 미안 ~ ' 뭐 20년 동안 어느센가 우리가 서로의 생일을 가깝다는 이유로 대충 챙겨도 되는 그런 날들이 된 거 겠지, 오랜 시간 서로의 생일을 늦더라도 축복해 주고 축하 해 주었던 우리가 이제는 결혼을 하고 가정을 꾸리는 관문 가운데 있네, 참 믿겨지지 않는 오늘, 네게 '고맙다' 는 말 하고 싶다. 고맙다. 용석아. ",
-    "한재의":"재의야 난 무슨일이 있던건지 모르겠고.. 왜 갑자기 사라졌냐.. 내 결혼식때는 인간적으로 와야 하지 않냐  🙏",
-    "정윤석": "표준값이 참 맞지 않아 농담이지만 화가나고 뜻하지 않게 힘겨웠던 어린 시절을 함께하며 나 또한 성장 할 수 있었어. 함께해 줘서 고맙다. 너가 먼저 결혼한게 얼마 안된 거 같은데 벌써 2세를 기다리고 있다니, 우리들의 2세는 안싸우고 사이좋게 지내는 어린 시절을 보낼 수 있을까? ㅋㅋ 2세 다시 한번 축하하고, 멋진 아버지가 될 거라 믿어. 응원한다. 고맙다.  ☁️",
-   "박동영": "동영아! 언제나 한결 같이 우리 가운데 있어주었기에 관계 가운데 인내하고 섬기는 모습가운데 나 또한 도전이 되고 많이 배웠던 거 같아. 함께 해 주었기에 오늘의 내가, 우리가 있지 않나 싶다. 고맙다! 결혼식에 꼭 와서 축복해주지 않겠니ㅎㅎㅎㅎㅎㅎㅎ",
-   "조성한": "어렸을때 성한이 너의 격려와 지지가 내게 참 큰 힘이 되었던 기억이 있어. 그 긍정적인 경험이 오늘의 내가 있도록 지지해 주었어 고맙다. 바쁜 사업 하느라 늘 고생 많은데, 먼길 오지 않아도 그 마음 아니까! 늘 응원해! 고맙다! ",
-   "이대희": "대희야! 안녕, 내 주위에 음식만 전문적으로 하고 미슐랭 월드 베스트에 계셨던 분도 있는데, 너 요리 잘한다 ㅋㅋ 그 요리가 우리 모임에 중심이 되어서 특별하지 않아도 기적처럼 평화로운 어느 밤들을 만들어 왔어, 요리하고 정리하고 쉽지 않은데 그렇게 섬겨주어 고맙다. 그 섬김을 내가 배워야 결혼해서 안 힘들텐데! 고맙다! ",
-   "현승환": "변명이라면 어린시절 건강한 애착관계를 형성하지 못한 내가 불안하고 두려운 마음으로 애들이랑 싸우고 먼저 공격하곤 했던 거 같아, 그중에 안타까운 기억중 하나는, 가만히 있던 너를 때렸던 거고 참 부끄럽고 미안한 기억인데, 어느날 멋있게 커서는 다 옛날 일이라며 괜찮다며 아무렇지 않은양 맞아주는 모습이 참 고맙고 멋지더라. 우리의 그 모든 시간들이 이제 이곳에 닿았네. 부족했던 나와 함께해 주었기에 오늘 내게 이런 날도 온다. 꼭 와서 맛있는 음식 먹고 가주렴! ",
-   "채석훈": "우리 가운데 어쩌면 가장 성공한건 네가 아닌가 싶다. 너무 예쁜 딸들과 가장의 무게를 견뎌하는 가정 먼저 어른이 되어 버린, 너의 매일 하루의 출근의 도전을 보고 들어. 쉽지 않은 길이고 상상도 안되는 그 길의 선배로써 우리 가운데 가끔 조언도 해주길 바라 :) 늦었지만 다시한번 축하하고, 멀리서 응원해. 가능하면 와서 맛있는 거 먹고 가! 고맙다! "
-  };
 
   return (
     <div className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth relative bg-paper bg-fixed bg-cover  font-myeongjo text-brownText">
@@ -212,15 +205,16 @@ useEffect(() => {
 
 
 {/* Section 1 - 초대합니다 */}
-      
-  
-
+     
     <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-2 mx-2">
-      {/* 상단 이미지 */}
+
+      {/* 초대합니다 */}
       <img
         src={`${process.env.PUBLIC_URL}/og-image.jpg`}
-        alt="레터 이미지"
-        className="w-full max-w-md mb-2 rounded-lg shadow-md mt-2"
+        alt="초대합니다"
+      className={`w-full max-w-md rounded-lg shadow-md transform transition-all duration-1000 ease-out ${
+          visible ? 'opacity-0 translate-y-10' : 'opacity-100 translate-y-0'
+        }`}
       />
 
       {/* 초청문 이미지 */}
@@ -228,7 +222,7 @@ useEffect(() => {
         ref={imageRef}
         src={`${process.env.PUBLIC_URL}/invitated.png`}
         alt="초청문 이미지"
-        className={`w-full max-w-md rounded-lg shadow-md transform transition-all duration-1000 ease-out ${
+        className={`w-full max-w-md rounded-lg shadow-md pt-4 transform transition-all duration-1000 ease-out ${
           visible ? 'opacity-0 translate-y-10' : 'opacity-100 translate-y-0'
         }`}
       />
@@ -239,9 +233,9 @@ useEffect(() => {
 
 <img
   src={`${process.env.PUBLIC_URL}/wedding.png`}
-  alt="웨딩 장식"
+  alt="결혼합니다"
   ref={imageRef}
-        className={`w-full max-w-md rounded-lg shadow-md transform transition-all duration-1000 ease-out ${
+  className={`w-full max-w-md rounded-lg shadow-md transform transition-all duration-1000 ease-out ${
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       />
@@ -270,13 +264,13 @@ useEffect(() => {
       언어도 문화도 성격도<br />
       카자흐스탄과 한국처럼<br />
       어쩌면 우린 만날 수 없었습니다.<br /><br />
-      나의 결핍은 욕구충족에 메말랐고<br />
+      나의 결핍은 욕구 충족에 메말랐고<br />
       나의 욕망은 타인을 소비했으며<br />
       사랑, 그 사이는 너무 멀었습니다.<br />
       그렇게 캄캄한 어둠만 혼돈했습니다.<br /><br />
 
-      그런데 상관 없는 나를 인내하고 기다려주고<br />
-      기도해 주는 선교사님, 목사님, 교회 공동체를 통해<br />
+      그런데 상관 없는 나를 인내하고 기다려 주고<br />
+      기도해 주시는 선교사님, 목사님, 교회 공동체를 통해<br />
       어렴풋이 예수님의 십자가 구원이 조금씩 보였습니다.<br /><br />
 
       세상에서 경험하지 못했던<br />
@@ -496,7 +490,8 @@ useEffect(() => {
     
 
   </div>
-    <p className="mt-10 text-sm text-gray-400">* 일정은 현장 사정에 따라 변경될 수 있습니다.</p>
+    <p className="mt-3 text-sm text-gray-400">* 일정은 현장 사정에 따라 변경될 수 있습니다.</p>
+    
 </section>
 
   {/* 📍식당 가기 섹션 */}
@@ -555,44 +550,51 @@ useEffect(() => {
     * 🐾 “조금만 걸으면 맛있는 식사가 기다려요! (운동도 되고 일석이조✨)”
   </p>
 </section>
+<section className="min-h-screen flex flex-col items-center justify-center text-center snap-start px-6 pt-5 bg-white relative">
 
+  <img
+    src={`${process.env.PUBLIC_URL}/verse.png`}
+    alt="웨딩 장식"
+    className="w-full max-w-md object-cover rounded-lg shadow mb-6"
+  />
+
+  <div className="w-full max-w-md bg-pink-50 bg-opacity-70 p-6 rounded-2xl shadow-lg space-y-4 transition-all duration-700 ease-out">
+    {!submitted && (
+      <>
+        <input
+          type="text"
+          placeholder="성함을 입력해주세요"
+          className="w-full px-4 py-3 border border-pink-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-pink-500 text-white py-2 rounded-xl hover:bg-pink-600 transition"
+        >
+          💌 초대 메시지 보기
+        </button>
+      </>
+    )}
+</div>
+    {/* 🎯 메시지 출력 영역 */}
+  {submitted && (
+  <div className="mt-6 text-lg text-gray-700 px-3 text-center space-y-4 transition-all duration-1000 ease-out transform opacity-100 translate-y-0">
     
+    {/* 이미지가 있다면 표시 */}
+    {messageImage && (
+      <img
+        src={process.env.PUBLIC_URL + messageImage}
+        alt={`${name}님 사진`}
+        className="mx-auto w-32 h-32 rounded-full object-cover shadow-md"
+      />
+    )}
 
-  <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-10 mx-2">
-
-    <img
-  src={`${process.env.PUBLIC_URL}/verse.png`}
-  alt="웨딩 장식"
-  className="w-full max-h-96 object-cover rounded-lg shadow mb-6"
-/>
-
-      
-      
-
-        {!submitted ? (
-          <>
-            <input
-              type="text"
-              placeholder="성함을 입력해주세요"
-              className="border border-pink-300 rounded px-4 py-2 mb-4 w-full max-w-xs"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <button
-              onClick={handleSubmit}
-              className="bg-pink-500 text-white px-6 py-2 rounded hover:bg-pink-600"
-            >
-              확인
-            </button>
-          </>
-        ) : (
-          
-          <div className="mt-6 text-lg text-gray-700 px-3">
-            {messages[name.trim()] || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`}
-          </div>
-        )}
-      </section>
-
+    {/* 메시지 본문 */}
+    <p className="whitespace-pre-line">{messageText}</p>
+  </div>
+)}
+</section>
 {/* 감사의 말씀 섹션 */}
 <section className="min-h-screen snap-start bg-[#FFF7F0] flex flex-col items-center justify-center px-6 py-12 text-center text-brownText">
   <h2 className="text-2xl font-bold text-orange-500 mb-6">💝 감사의 말씀</h2>
@@ -603,87 +605,82 @@ useEffect(() => {
   </p>
 
   <div className="text-sm text-left max-w-xl space-y-4 bg-white p-6 rounded-xl shadow-md">
-   <p>
-      특별히 저희의 오락가락하는 마음과 감정으로 힘드셨던 분들:<br />
-      <strong> 임하경 선교사님, 한수아 선교사님, 황승수 목사님, 정지연 사모님</strong>
-    </p>
-    
-    <p>특별히 인고의 시간을 견디며 숄판의 배우자를 위해 오~랜 시간 기도해 주시며 함께해 주신 분들: <br />
-    김계원 선생님, 이정미 선생님 </p> 
-    <p> 숄판의 배우자를 위해 기도 하다하다 지쳐 쓰러질뻔 했던 분이 몇 분 계시다는 소문이.. </p>
-  
-    <p>숄판 & 준배' 예비 부부 양육: <br />  임하경 선교사님, 한수아 선교사님, 황승수 목사님, 정지연 사모님 </p>
-      <p>예배&예식 장소 지원: <br /> 꿈교회공동체</p>
-    <p>
-      청첩장, 예배 순서지 디자인 및 제작 지원:<br />
-      <strong>박은옥 전도사님</strong>
-    </p>
-    <p>
-      신랑 신부 어머님 예복:<br />
-      <strong>박은옥 전도사님</strong>
-    </p>
-    <p>결혼식 & 웨딩 사진 촬영 및 지원: <br /> 호길형님</p>
-    <p>제주도 신혼여행 웨딩사진 촬영 및 숙박 지원: <br /> 녕인누나 </p>
-    <p>
-      신랑, 신부, 어머님 메이크업 및 스타일 지원:<br />
-      <strong>봄애 집사님</strong>
-    </p>
-    <p>
-      축가: <br />
-      <strong> 가수 & 연예인 - 완전 멋진 상욱형님 🎤</strong>
-    </p>
-    <p>예식 및 교회 안내: <br/> 김다혜전도사님, 용찬형제, 정훈형제, 순녕형제, 재원형제, </p>
-    <p>
-      사회자:<br />
-      <strong>진짜 호주 왕복 티켓 사서 사회자 볼꺼야 정민아??? </strong>
-    </p>
-    <p>
-      처음 하나님께로 인도해 주신 분:<br />
-      <strong>제충만 형님</strong>
-    </p>
-    <p>
-     살며 아름다운 첫 믿음의 공동체를 경험케 해주신 형님 누님 :<br />
-      <strong>호길, 진영, 주희, 충만 </strong>
-    </p>
-    <p>
-      준배 사람 만들어 주신 분들:<br />
-      <strong>김향래 어머님, 김주형 목사님</strong>
-    </p>
-    <p>
-      기도로 빚어 주신 분들:<br />
-      <strong>진기현 목사님, 꿈교회 공동체</strong>
-    </p>
-    <p>
-      방글라데시 난민촌에서 예수님의 손과 발이 되는 삶을 가르쳐 주신 분:<br />
-      <strong>김해성 목사님</strong>
-    </p>
-    <p>
-      청년부 리더로 결혼 준비도 도와주신:<br />
-      <strong>예레미야 온맘다혜 전도사님</strong>
-    </p>
-    <p>
-   🔥ball 친구들:
-  <br />
-  <strong>재의, 용석, 용현, 윤석, 승환, 성한, 석훈, 동영, 대희, 기환</strong><br />
-  
-</p>
-    <p>
-      꿈교회 남자청년부 브로멘스 형제들:<br />
-      <strong>정훈, 수보, 수빈, 순녕, 재원</strong><br />
-      (브로맨스 은혜 넘침 😎 하나님만 본다… 이젠 안녕)
-    </p>
-    <p>
-      아름다운 상을 나눠주신 분들:<br />
-      <strong>효진쌤, 재림쌤, 혜윤쌤, 시은쌤, 영현쌤, 은지쌤, 가람쌤,</strong>
-    </p>
-    <p>
-      전국 농협 외국어 통역 어벤져스 선배님들:<br />
-      <strong>멋진 신윤희 팀장님, 자책마요 완벽해요 유진 강사님, 캡틴 세진, 신우회 리더 은화 선배님, 정훈 선배님, 현진 선배, 박미화</strong>
-    </p>
-    <p>
-      And good friends:<br />
-      <strong>Shakir 🌍</strong>
-    </p>
+  <p>특별히 저희의 오락가락하는 마음과 감정으로 힘드셨던 분들:<br />
+임하경 선교사님, 한수아 선교사님, 황승수 목사님, 정지연 사모님</p>
+
+<p>인고의 시간을 견디며 숄판의 배우자를 위해 오~랜 시간 기도해 주시며 함께해 주신 분들:<br />
+김계원 선생님, 이정미 선생님</p>
+
+<p>숄판의 배우자를 위해 기도 하다하다 지쳐 쓰러질뻔 했던 분이 몇 분 계시다는 소문이..</p>
+
+<p>숄판 & 준배' 예비 부부 양육:<br />
+임하경 선교사님, 한수아 선교사님, 황승수 목사님, 정지연 사모님</p>
+
+<p>예배&예식 장소 지원:<br />
+꿈교회공동체</p>
+
+<p>청첩장, 예배 순서지 디자인 및 제작 지원:<br />
+박은옥 전도사님</p>
+
+<p>신랑 신부 어머님 예복 지원:<br />
+박은옥 전도사님</p>
+
+<p>결혼식 & 웨딩 사진 촬영 및 지원:<br />
+호길형님</p>
+
+<p>제주도 신혼여행 웨딩사진 촬영 및 숙박 지원:<br />
+녕인누나</p>
+
+<p>신랑, 신부, 어머님 메이크업 및 스타일 지원:<br />
+봄애 집사님</p>
+
+<p>축가:<br />
+가수 & 연예인 - 완전 멋진 상욱형님 🎤</p>
+
+<p>예식 및 교회 안내:<br />
+김다혜전도사님, 용찬형제, 정훈형제, 순녕형제, 재원형제</p>
+
+<p>사회자:<br />
+진짜 호주 왕복 티켓 사서 사회자 볼꺼야 정민아???</p>
+
+<p>처음 하나님께로 인도해 주신 분:<br />
+제충만 형님</p>
+
+<p>살며 아름다운 첫 믿음의 공동체를 경험케 해주신 형님 누님:<br />
+호길, 진영, 주희, 충만</p>
+
+<p>준배 사람 만들어 주신 분들:<br />
+김향래 어머님, 김주형 목사님</p>
+
+<p>기도로 빚어 주신 분들:<br />
+진기현 목사님, 꿈교회 공동체</p>
+
+<p>방글라데시 난민촌에서 예수님의 손과 발이 되는 삶을 가르쳐 주신 분:<br />
+김해성 목사님</p>
+
+<p>청년부 리더로 결혼 준비도 함께 해주신:<br />
+예레미야 온맘다혜 전도사님</p>
+
+<p>언제나 응원해주시고 지지해 주시는:<br />
+이수진 목사님, 이지선 사모님</p>
+
+<p>🔥ball 친구들:<br />
+재의, 용석, 용현, 윤석, 승환, 성한, 석훈, 동영, 대희, 기환</p>
+
+<p>꿈교회 남자청년부 브로멘스 형제들:<br />
+정훈, 수보, 수빈, 순녕, 재원<br />
+(브로맨스 은혜 넘침 😎 하나님만 본다… 이젠 안녕)</p>
+
+<p>아름다운 상을 나눠주신 분들:<br />
+효진쌤, 재림쌤, 혜윤쌤, 시은쌤, 영현쌤, 은지쌤, 가람쌤</p>
+
+<p>전국 농협 외국어 통역 어벤져스 선배님들:<br />
+멋진 신윤희 팀장님, 자책마요 완벽해요 유진 강사님, 캡틴 세진대장, 동규 형님, 신우회 리더 은화 선배님, 정훈 선배님, 현진 선배, 이웃집 미현누나, 정갈리나</p>
+
+<p>예식장의 꽃과 향기: 참석해 주시는 분들 💐</p>
+
+<p>And good friends:<br />
+Shakir 🌍</p>
     <p className="italic text-sm text-gray-600">
       여기서 다 말 할 수 없었던 분들은,<br />
       빛도 그늘도 없는 곳에서 남몰래 지지해주시고 기도해주셨던 감사한 분들입니다.<br />
@@ -701,7 +698,7 @@ useEffect(() => {
   
 </section>
 
-  {/* Section 3 - 성경 말씀 */}
+
 {/* Section 3 - 성경 말씀 */}
 <section className="h-screen snap-start bg-pink-100 flex flex-col items-center justify-center px-6 text-center">
   {/* 날짜와 시간 */}
