@@ -56,10 +56,11 @@ function App() {
   const imageRef = useRef(null);
   const [visible, setVisible] = useState(false);
   const blockRef = useRef(null);
-
- const selected = messages[name.trim()];
+const trimmedName = name.trim();
+const selected = messages[trimmedName];
 const messageText = selected?.text || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`;
-const messageImage = selected?.image; 
+const messageImage = selected?.image || null;
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -84,9 +85,12 @@ const messageImage = selected?.image;
     return () => clearInterval(interval);
   }, []);
 
+  
  const handleSubmit = () => {
   setSubmitted(true);
-  const fullMessage = messages[name.trim()] || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`;
+const trimmedName = name.trim();
+const selected = messages[trimmedName];
+const fullMessage = selected?.text || `"${trimmedName}"님의 초대 메시지가 준비 중입니다. 💌`;
 
   if (typingInterval.current) clearInterval(typingInterval.current); // ✅ 중복 제거
 
@@ -576,24 +580,25 @@ useEffect(() => {
         </button>
       </>
     )}
-</div>
+
     {/* 🎯 메시지 출력 영역 */}
   {submitted && (
   <div className="mt-6 text-lg text-gray-700 px-3 text-center space-y-4 transition-all duration-1000 ease-out transform opacity-100 translate-y-0">
     
-    {/* 이미지가 있다면 표시 */}
+    {/* 🎯 이미지 출력 */}
     {messageImage && (
       <img
-        src={process.env.PUBLIC_URL + messageImage}
+        src={`${process.env.PUBLIC_URL}${messageImage}`}
         alt={`${name}님 사진`}
-        className="mx-auto w-32 h-32 rounded-full object-cover shadow-md"
+        className="mx-auto w-full max-w-xs rounded-lg object-contain shadow-md"
       />
     )}
 
-    {/* 메시지 본문 */}
-    <p className="whitespace-pre-line">{messageText}</p>
+    {/* 🎯 메시지 텍스트 출력 */}
+    <p className="whitespace-pre-line">{displayedText || messageText}</p>
   </div>
 )}
+  </div>
 </section>
 {/* 감사의 말씀 섹션 */}
 <section className="min-h-screen snap-start bg-[#FFF7F0] flex flex-col items-center justify-center px-6 py-12 text-center text-brownText">
