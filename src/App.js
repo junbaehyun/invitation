@@ -5,6 +5,8 @@ import messages from './message';
 
 
 // App 함수 바깥에 추가
+
+
 function Countdown({ targetDate }) {
   const [timeLeft, setTimeLeft] = useState({});
 
@@ -44,7 +46,16 @@ function Countdown({ targetDate }) {
   );
 }
 function App() {
-  const [name, setName] = useState('');
+
+const [name, setName] = useState('');
+const trimmedName = name.trim();
+const specialNames = ['김계원', '이정미', '임하경', '한수아', '박정민', '서상욱', '이수진','황승수','정지연','이지선','김다혜','정순이'];
+const isSpecialGuest = specialNames.includes(trimmedName);
+
+
+
+
+
   const [submitted, setSubmitted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
@@ -56,11 +67,23 @@ function App() {
   const imageRef = useRef(null);
   const [visible, setVisible] = useState(false);
   const blockRef = useRef(null);
-const trimmedName = name.trim();
+
 const selected = messages[trimmedName];
 const messageText = selected?.text || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`;
 const messageImage = selected?.image || null;
   
+
+useEffect(() => {
+  const setRealVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+
+  setRealVh(); // initial call
+  window.addEventListener('resize', setRealVh);
+  return () => window.removeEventListener('resize', setRealVh);
+}, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -170,42 +193,57 @@ useEffect(() => {
       </audio>
 
       {/* Section 0 - 모바일 청첩장 커버 */}
-      <section className="h-screen snap-start relative flex items-center justify-center overflow-hidden bg-white">
-        <img
-          src={`${process.env.PUBLIC_URL}/img1.png`}
-          alt="커버 이미지"
-          className="absolute inset-0 w-full h-full object-cover scale-105"
-        />
- {/* D-Day 표시 */}
-  <div className="absolute bottom-16 center bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full shadow-md animate-fadeInDown">
+  <section className="h-screen snap-start relative flex items-center justify-center overflow-hidden bg-black">
+
+  {/* 위에서 내려오는 검정 오버레이 */}
+<div className="absolute top-0 left-0 w-full h-1/2 bg-black z-50 animate-slideOutTop delay-[5000ms]"></div>
+
+{/* 아래에서 올라오는 검정 오버레이 */}
+<div className="absolute bottom-0 left-0 w-full h-1/2 bg-black z-50 animate-slideOutBottom delay-[1000ms]"></div>
+  {/* 배경 이미지: 천천히 나타남 */}
+<img
+  src={`${process.env.PUBLIC_URL}/img1.png`}
+  alt="커버 이미지"
+  className="absolute inset-0 w-full h-full object-cover scale-105 filter grayscale transition duration-[2s] ease-out"
+  style={{ animation: 'toColor 5s ease-out forwards' }}
+/>
+
+
+
+  {/* 이름 */}
+  <div className="absolute top-6 left-4 text-pink-300 text-xs font-semibold tracking-wide z-40 animate-fadeInDown delay-[1300ms]">
+    JUNBAE
+  </div>
+  <div className="absolute top-6 right-4 text-pink-300 text-xs font-semibold tracking-wide z-40 animate-fadeInDown delay-[1300ms]">
+    SHOLPAN
+  </div>
+
+{/* 상단 문구 */}
+<div className="absolute top-20 w-full flex justify-center z-40 animate-shrinkText delay-[8000ms]">
+  <p className="text-xl md:text-2xl text-pink-300 tracking-[.25em] uppercase font-semibold">
+    We Are Getting Married
+  </p>
+</div>
+
+  {/* 중앙 하단 텍스트 */}
+  <div className="absolute inset-0 flex flex-col items-center justify-end pb-24 z-40 animate-fadeInUp delay-[2200ms]">
+    <h1
+      className="text-5xl text-pink-300 font-light italic leading-tight mb-4"
+      style={{ fontFamily: `'Dancing Script', cursive` }}
+    >
+      Wedding Day
+    </h1>
+    <p className="text-sm tracking-wider text-pink-300">2025.07.12 SAT 11:30 꿈이있는교회</p>
+  </div>
+
+    {/* D-Day */}
+  <div className="absolute bottom-14 center bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full shadow-md z-40 animate-fadeInDown delay-[2000ms]">
     {getDday()}
   </div>
-        {/* 이름 & 문구 */}
-        <div className="absolute top-6 left-4 text-pink-300 text-xs font-semibold tracking-wide animate-fadeInDown">
-          JUNBAE
-        </div>
-        <div className="absolute top-6 right-4 text-pink-300 text-xs font-semibold tracking-wide animate-fadeInDown">
-          SHOLPAN
-        </div>
-        <div className="absolute top-20 w-full flex justify-center animate-fadeInDown delay-200">
-          <p className="text-sm text-pink-300 tracking-[.25em] uppercase">We Are Getting Married</p>
-        </div>
 
-        {/* 중앙 하단 텍스트 */}
-        <div className="absolute inset-0 flex flex-col items-center justify-end pb-24 animate-fadeInUp delay-500">
-          <h1
-            className="text-5xl text-pink-300 font-light italic leading-tight mb-4"
-            style={{ fontFamily: `'Dancing Script', cursive` }}
-          >
-            Wedding Day
-          </h1>
-          <p className="text-sm tracking-wider text-pink-300">2025.07.12 SAT 11:30 꿈이있는교회</p>
-        </div>
-          {/* D-Day 줄 */}
-  
-
-        <div className="absolute bottom-6 animate-bounce text-pink-300 text-2xl">↓</div>
-      </section>
+  {/* ↓ 아이콘 */}
+  <div className="absolute bottom-4 animate-bounce text-pink-300 text-2xl z-40">↓</div>
+</section>
 
 
 {/* Section 1 - 초대합니다 */}
@@ -643,7 +681,7 @@ useEffect(() => {
 가수 & 연예인 - 완전 멋진 상욱형님 🎤</p>
 
 <p>예식 및 교회 안내:<br />
-김다혜전도사님, 용찬형제, 정훈형제, 순녕형제, 재원형제</p>
+김다혜전도사님, 용찬형제, 정훈형제, 수녕형제, 재원형제, 재현형제</p>
 
 <p>사회자:<br />
 진짜 호주 왕복 티켓 사서 사회자 볼꺼야 정민아???</p>
@@ -723,6 +761,43 @@ Shakir 🌍</p>
     From <strong>“Jesus Calling”</strong> by Sarah Young
   </p>
 </section>
+
+
+{/* ✅ 새로운 Vision & Prayer Section */}
+{submitted && isSpecialGuest && (
+<section className="min-h-screen snap-start bg-[#FFF3F7] px-6 py-10 flex flex-col items-center justify-center text-center space-y-6">
+  <h2 className="text-2xl font-bold text-orange-500 mb-2">🎯 Vision & Prayer</h2>
+  <p className="text-sm text-gray-700 leading-relaxed max-w-lg">
+    Our Father in heaven,<br />
+    Your kingdom come,<br />
+    Your will be done,<br />
+    on earth as it is in heaven.<br /><br />
+    그러므로 너희는 가서 모든 민족을 제자로 삼고...
+  </p>
+
+  <div className="text-left text-sm text-gray-800 bg-white p-4 rounded-lg shadow max-w-md w-full space-y-3">
+    <p><strong>📍 지금:</strong> 예비부부 교육 + 결혼예배 준비</p>
+    <p><strong>🕊️ 1년:</strong> 한국 정착, 언어문화 교류, 첫 아이 출산</p>
+    <p><strong>👣 2년:</strong> 양육 + 커리어 준비</p>
+    <p><strong>🌱 4년:</strong> 둘째 출산 + 3천만 원 훈련 기금 준비</p>
+    <p><strong>🕯️ 8년:</strong> 셋째 출산 + 제자훈련</p>
+    <p><strong>🌍 10년:</strong> 파송 또는 선교지에서 복음 전파</p>
+  </div>
+
+  <a
+    href="https://prezi.com/view/5d2OzX7HWdS3PbMxBh7d/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-pink-600 underline text-sm hover:text-pink-800"
+  >
+    👉 비전 로드맵 자세히 보기
+  </a>
+
+  <p className="mt-4 text-gray-600 text-sm italic">
+    카작 청년에게 믿음을, 땅 끝까지 그리스도를.
+  </p>
+</section>
+)}
     </div>
   );
 }
