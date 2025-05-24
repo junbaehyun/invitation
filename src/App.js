@@ -193,40 +193,30 @@ useEffect(() => {
       </audio>
 
       {/* Section 0 - 모바일 청첩장 커버 */}
-  <section className="h-screen snap-start relative flex items-center justify-center overflow-hidden bg-black">
+<section className="h-screen snap-start relative flex items-center justify-center overflow-hidden bg-black">
+  {/* 배경 이미지 */}
+  <img
+    src={`${process.env.PUBLIC_URL}/img1.png`}
+    alt="커버 이미지"
+    className="absolute inset-0 w-full h-full object-cover scale-105 filter grayscale transition duration-[2s] ease-out"
+    style={{ animation: 'toColor 5s ease-out forwards' }}
+  />
 
-  {/* 위에서 내려오는 검정 오버레이 */}
-<div className="absolute top-0 left-0 w-full h-1/2 bg-black z-50 animate-slideOutTop delay-[5000ms]"></div>
-
-{/* 아래에서 올라오는 검정 오버레이 */}
-<div className="absolute bottom-0 left-0 w-full h-1/2 bg-black z-50 animate-slideOutBottom delay-[1000ms]"></div>
-  {/* 배경 이미지: 천천히 나타남 */}
-<img
-  src={`${process.env.PUBLIC_URL}/img1.png`}
-  alt="커버 이미지"
-  className="absolute inset-0 w-full h-full object-cover scale-105 filter grayscale transition duration-[2s] ease-out"
-  style={{ animation: 'toColor 5s ease-out forwards' }}
-/>
-
-
-
-  {/* 이름 */}
-  <div className="absolute top-6 left-4 text-pink-300 text-xs font-semibold tracking-wide z-40 animate-fadeInDown delay-[1300ms]">
+  {/* 🔥 텍스트 레이어 (항상 보임) */}
+  <div className="absolute top-6 left-4 text-pink-300 text-xs font-semibold tracking-wide z-60">
     JUNBAE
   </div>
-  <div className="absolute top-6 right-4 text-pink-300 text-xs font-semibold tracking-wide z-40 animate-fadeInDown delay-[1300ms]">
+  <div className="absolute top-6 right-4 text-pink-300 text-xs font-semibold tracking-wide z-60">
     SHOLPAN
   </div>
 
-{/* 상단 문구 */}
-<div className="absolute top-20 w-full flex justify-center z-40 animate-shrinkText delay-[8000ms]">
-  <p className="text-xl md:text-2xl text-pink-300 tracking-[.25em] uppercase font-semibold">
-    We Are Getting Married
-  </p>
-</div>
+  <div className="absolute top-20 w-full flex justify-center z-60">
+    <p className="text-xl md:text-2xl text-pink-300 tracking-[.25em] uppercase font-semibold">
+      We Are Getting Married
+    </p>
+  </div>
 
-  {/* 중앙 하단 텍스트 */}
-  <div className="absolute inset-0 flex flex-col items-center justify-end pb-24 z-40 animate-fadeInUp delay-[2200ms]">
+  <div className="absolute inset-0 flex flex-col items-center justify-end pb-24 z-60">
     <h1
       className="text-5xl text-pink-300 font-light italic leading-tight mb-4"
       style={{ fontFamily: `'Dancing Script', cursive` }}
@@ -235,6 +225,10 @@ useEffect(() => {
     </h1>
     <p className="text-sm tracking-wider text-pink-300">2025.07.12 SAT 11:30 꿈이있는교회</p>
   </div>
+
+  {/* 검정 오버레이 (아래로 사라짐) */}
+  <div className="absolute top-0 left-0 w-full h-1/2 bg-black z-50 animate-slideOutTop delay-[3000ms]"></div>
+  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-black z-50 animate-slideOutBottom delay-[3000ms]"></div>
 
     {/* D-Day */}
   <div className="absolute bottom-14 center bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full shadow-md z-40 animate-fadeInDown delay-[2000ms]">
@@ -367,17 +361,24 @@ useEffect(() => {
         <div key={i} className="font-medium text-gray-500">{day}</div>
       ))}
 
-      {/* 날짜들: 공백 + 1~31 */}
-      {Array.from({ length: 31 + 1 }, (_, i) => {
-        const day = i === 0 ? null : i;
-        const isSelected = day === 12;
-
-        return (
-          <div key={i} className={`h-8 w-8 flex items-center justify-center rounded-full ${isSelected ? 'bg-orange-300 text-white font-bold' : ''}`}>
-            {day || ''}
-          </div>
-        );
-      })}
+    
+      {/* 날짜들: 2칸 비우고 1일부터 31일까지 */}
+{[
+  ...Array(2).fill(null), // Sunday & Monday empty
+  ...Array.from({ length: 31 }, (_, i) => i + 1),
+].map((day, i) => {
+  const isSelected = day === 12;
+  return (
+    <div
+      key={i}
+      className={`h-8 w-8 flex items-center justify-center rounded-full ${
+        isSelected ? 'bg-orange-300 text-white font-bold' : ''
+      }`}
+    >
+      {day || ''}
+    </div>
+  );
+})}
     </div>
   </div>
 </section>
