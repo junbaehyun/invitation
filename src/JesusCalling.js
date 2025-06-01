@@ -89,10 +89,48 @@ export const jesusCalling = {
   },
   "2025-05-29": {
     devotional:
-      "I am always with you. Every breath, every moment, is held in My care. \n\nWhen anxiety creeps in, return to Me. Let Me calm your heart and remind you: You are not alone. I go before you, walk beside you, and remain within you.",
+      "I am with you, watching over you constantly. I am Emmanuel (God with you); My Presence enfolds you in radiant Love. Nothing, including the brightest blessings and the darkest trials, can separate you from Me. Some of My children find Me more readily during dark times, when difficulties force them to depend on Me. Others feel closer to Me when their lives are filled with good things. They respond with thanksgiving and praise, thus opening wide the door to My Presence.\n\nI know precisely what you need to draw nearer to Me. Go through each day looking for what I have prepared for you. Accept every event as My hand-tailored provision for your needs. When you view your life this way, the most reasonable response is to be thankful. Do not reject any of My gifts; find Me in every situation.",
     verses: [
-      { reference: "Joshua 1:9", text: "Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go." },
-      { reference: "John 14:27", text: "Do not let your hearts be troubled and do not be afraid." }
+      {
+        reference: "Matthew 1:23",
+        text: "Look! The virgin will conceive a child! She will give birth to a son, and they will call him Immanuel, which means 'God is with us.'"
+      },
+      {
+        reference: "Colossians 2:6-7",
+        text: "And now, just as you accepted Christ Jesus as your Lord, you must continue to follow him. Let your roots grow down into him, and let your lives be built on him. Then your faith will grow strong in the truth you were taught, and you will overflow with thankfulness."
+      }
+    ]
+  },
+  "2025-05-30": {
+    devotional:
+      "Time with Me cannot be rushed. When you are in a hurry, your mind flitters back and forth between Me and the tasks ahead of you. Push back the demands pressing in on you; create a safe space around you, a haven in which you can rest with Me. I also desire this time of focused attention and I use it to bless you, strengthening and equipping you for the day ahead. Thus, spending time with Me is a wise investment.\n\nBring Me the sacrifice of your precious time. This creates sacred space around you--space permeated with My Presence and My Peace.",
+    verses: [
+      {
+        reference: "Psalm 119:27",
+        text: "Help me understand the meaning of your commandments, and I will meditate on your wonderful deeds."
+      },
+      {
+        reference: "2 Chronicles 16:9",
+        text: "The eyes of the LORD search the whole earth in order to strengthen those whose hearts are fully committed to him."
+      },
+      {
+        reference: "Hebrews 13:15",
+        text: "Therefore, let us offer through Jesus a continual sacrifice of praise to God, proclaiming our allegiance to his name."
+      }
+    ]
+  },
+  "2025-05-31": {
+    devotional:
+      "The Peace that I give you transcends your intellect. When most of your mental energy goes into efforts to figure things out, you are unable to receive this glorious gift. I look into your mind and see thoughts spinning round and round: going nowhere, accomplishing nothing. All the while, My Peace hovers over you, searching for a place to land.\n\nBe still in My Presence, inviting Me to control your thoughts. Let My Light soak into your mind and heart, until you are aglow with My very Being. This is the most effective way to receive My Peace.",
+    verses: [
+      {
+        reference: "2 Thessalonians 3:16",
+        text: "Now may the Lord of peace himself give you his peace at all times and in every situation. The Lord be with you all."
+      },
+      {
+        reference: "Job 22:21",
+        text: "Submit to God, and you will have peace; then things will go well for you."
+      }
     ]
   },
   

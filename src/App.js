@@ -10,7 +10,7 @@ import messages from './message';
 function Countdown({ targetDate }) {
   const [timeLeft, setTimeLeft] = useState({});
 
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
@@ -49,10 +49,12 @@ function App() {
 
 const [name, setName] = useState('');
 const trimmedName = name.trim();
-const specialNames = ['김계원', '이정미', '임하경', '한수아', '박정민', '서상욱', '이수진','황승수','정지연','이지선','김다혜','정순이'];
+const specialNames = ['김계원', '이정미', '임하경', '한수아', '박정민', '서상욱', '이수진','황승수','정지연','이지선','김다혜','정순이','박연의','김영현', '서상욱', '최보경', '서현석','권수영']
 const isSpecialGuest = specialNames.includes(trimmedName);
 
 
+
+const containerRef = useRef(null);
 
 
 
@@ -72,7 +74,21 @@ const selected = messages[trimmedName];
 const messageText = selected?.text || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`;
 const messageImage = selected?.image || null;
   
+useEffect(() => {
+  if (submitted && isSpecialGuest && containerRef.current) {
+    setTimeout(() => {
+      containerRef.current.scrollLeft = window.innerWidth;
+    }, 100); // DOM 렌더 후 스크롤 적용
+  }
+}, [submitted, isSpecialGuest]);
 
+  // ✅ 2. useEffect로 페이지 로드시 가운데로 스크롤 이동
+  useEffect(() => {
+    if (containerRef.current) {
+      const screenWidth = window.innerWidth;
+      containerRef.current.scrollLeft = screenWidth; // 가운데로 이동
+    }
+  }, []);
 useEffect(() => {
   const setRealVh = () => {
     const vh = window.innerHeight * 0.01;
@@ -171,10 +187,8 @@ useEffect(() => {
 }, []);
 
 
-
-
   return (
-    <div className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth relative bg-paper bg-fixed bg-cover  font-myeongjo text-brownText">
+    <div className="h-[100dvh] h-screen w-full overflow-y-auto snap-y snap-mandatory scroll-smooth relative bg-paper bg-fixed bg-cover  font-myeongjo text-brownText">
 
       {/* 🎵 오른쪽 아래 재생 버튼 */}
       <button
@@ -194,7 +208,8 @@ useEffect(() => {
 
       {/* Section 0 - 모바일 청첩장 커버 */}
 <section className="h-screen snap-start relative flex items-center justify-center overflow-hidden bg-black">
-  {/* 배경 이미지 */}
+  
+  {/* section 0  배경 이미지 */}
   <img
     src={`${process.env.PUBLIC_URL}/img1.png`}
     alt="커버 이미지"
@@ -237,6 +252,8 @@ useEffect(() => {
 
   {/* ↓ 아이콘 */}
   <div className="absolute bottom-4 animate-bounce text-pink-300 text-2xl z-40">↓</div>
+
+
 </section>
 
 
@@ -622,20 +639,20 @@ useEffect(() => {
 
     {/* 🎯 메시지 출력 영역 */}
   {submitted && (
-  <div className="mt-6 text-lg text-gray-700 px-3 text-center space-y-4 transition-all duration-1000 ease-out transform opacity-100 translate-y-0">
-    
-    {/* 🎯 이미지 출력 */}
-    {messageImage && (
-      <img
-        src={`${process.env.PUBLIC_URL}${messageImage}`}
-        alt={`${name}님 사진`}
-        className="mx-auto w-full max-w-xs rounded-lg object-contain shadow-md"
-      />
-    )}
+<div className="mt-4 text-lg text-gray-700 px-2 text-left space-y-4 transition-all duration-1000 ease-out transform opacity-100 translate-y-0">
+  
+  {/* 🎯 이미지 출력 */}
+  {messageImage && (
+    <img
+      src={`${process.env.PUBLIC_URL}${messageImage}`}
+      alt={`${name}님 사진`}
+      className="mx-auto w-full max-w-xs rounded-lg object-contain shadow-md"
+    />
+  )}
 
-    {/* 🎯 메시지 텍스트 출력 */}
-    <p className="whitespace-pre-line">{displayedText || messageText}</p>
-  </div>
+  {/* 🎯 메시지 텍스트 출력 */}
+  <p className="whitespace-pre-wrap break-words">{displayedText || messageText}</p>
+</div>
 )}
   </div>
 </section>
@@ -660,6 +677,9 @@ useEffect(() => {
 <p>숄판 & 준배' 예비 부부 양육:<br />
 임하경 선교사님, 한수아 선교사님, 황승수 목사님, 정지연 사모님</p>
 
+<p>카작에서 보살펴 주시고 섬겨주셨으며 결혼을 위해 합력하여 선을 이뤄 주신 분들 :<br />
+서현석 선생님, 공재영 선생님, 염창렬 선생님 </p>
+
 <p>예배&예식 장소 지원:<br />
 꿈교회공동체</p>
 
@@ -682,7 +702,7 @@ useEffect(() => {
 가수 & 연예인 - 완전 멋진 상욱형님 🎤</p>
 
 <p>예식 및 교회 안내:<br />
-김다혜전도사님, 용찬형제, 정훈형제, 수녕형제, 재원형제, 재현형제</p>
+김다혜전도사님, 용찬형제, 정훈형제, 수녕형제, 재원형제</p>
 
 <p>사회자:<br />
 진짜 호주 왕복 티켓 사서 사회자 볼꺼야 정민아???</p>
@@ -697,10 +717,11 @@ useEffect(() => {
 김향래 어머님, 김주형 목사님</p>
 
 <p>기도로 빚어 주신 분들:<br />
-진기현 목사님, 꿈교회 공동체</p>
+진기현 목사님, 꿈교회 공동체, 카자흐스탄 선생님들 </p>
 
 <p>방글라데시 난민촌에서 예수님의 손과 발이 되는 삶을 가르쳐 주신 분:<br />
 김해성 목사님</p>
+
 
 <p>청년부 리더로 결혼 준비도 함께 해주신:<br />
 예레미야 온맘다혜 전도사님</p>
@@ -708,11 +729,14 @@ useEffect(() => {
 <p>언제나 응원해주시고 지지해 주시는:<br />
 이수진 목사님, 이지선 사모님</p>
 
+<p> 결혼생활의 사실과 실체 가운데 실질적 조언을 주시고 함께 기도해 주신 분들: <br /> 
+서상욱 최보경 형님 누나</p>
+
 <p>🔥ball 친구들:<br />
 재의, 용석, 용현, 윤석, 승환, 성한, 석훈, 동영, 대희, 기환</p>
 
 <p>꿈교회 남자청년부 브로멘스 형제들:<br />
-정훈, 수보, 수빈, 순녕, 재원<br />
+정훈, 수보, 수빈, 순녕, 재원, 재현<br />
 (브로맨스 은혜 넘침 😎 하나님만 본다… 이젠 안녕)</p>
 
 <p>아름다운 상을 나눠주신 분들:<br />
@@ -766,39 +790,112 @@ Shakir 🌍</p>
 
 {/* ✅ 새로운 Vision & Prayer Section */}
 {submitted && isSpecialGuest && (
-<section className="min-h-screen snap-start bg-[#FFF3F7] px-6 py-10 flex flex-col items-center justify-center text-center space-y-6">
-  <h2 className="text-2xl font-bold text-orange-500 mb-2">🎯 Vision & Prayer</h2>
-  <p className="text-sm text-gray-700 leading-relaxed max-w-lg">
-    Our Father in heaven,<br />
-    Your kingdom come,<br />
-    Your will be done,<br />
-    on earth as it is in heaven.<br /><br />
-    그러므로 너희는 가서 모든 민족을 제자로 삼고...
-  </p>
+     <section
+      className="h-screen snap-start overflow-x-auto snap-x snap-mandatory scroll-smooth bg-white relative"
+      ref={containerRef}
+    >
+      {/* 안내 텍스트 */}
+      
 
-  <div className="text-left text-sm text-gray-800 bg-white p-4 rounded-lg shadow max-w-md w-full space-y-3">
-    <p><strong>📍 지금:</strong> 예비부부 교육 + 결혼예배 준비</p>
-    <p><strong>🕊️ 1년:</strong> 한국 정착, 언어문화 교류, 첫 아이 출산</p>
-    <p><strong>👣 2년:</strong> 양육 + 커리어 준비</p>
-    <p><strong>🌱 4년:</strong> 둘째 출산 + 3천만 원 훈련 기금 준비</p>
-    <p><strong>🕯️ 8년:</strong> 셋째 출산 + 제자훈련</p>
-    <p><strong>🌍 10년:</strong> 파송 또는 선교지에서 복음 전파</p>
+      <div className="flex w-[300vw] h-screen">
+        {/* Left - Sholpan Testimony */}
+        <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-white text-center px-6 overflow-y-auto">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Sholpan's Testimony</h2>
+            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap max-w-md">
+              Hello! My name is Sholpan, and I’m from a small village in Kazakhstan 😁.
+
+              When I was a child, a relative told me we were sinful. Later, she invited our family to church. I noticed the people there were full of joy and kindness. My sister and I started attending regularly and joined summer camps each year. We grew up among believers.
+
+              In school, we were bullied for being Christians. It continued even in college and university. But I found a new family in Christ — full of joy, unity, and love.
+
+              In 2005, I began serving in children’s camps and church worship. Later in Almaty, I served in the worship team and youth group. I also joined OM’s Silk Road outreach many times.
+
+              I worked with Operation Mercy, then prayed to serve abroad. God opened two doors: England or Kenya. I chose Kenya by faith. God provided everything as promised (Genesis 22:14).
+
+              I served in Kenya for a year. Then COVID came, and God called me back to Kazakhstan. He again provided home and work. I now serve women in difficult marriages, sharing the hope of God’s love.
+            </p>
+        </div>
+
+        {/* Center - Vision & Prayer */}
+        
+        <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-[#FFF3F7] px-6 text-center space-y-6 overflow-y-auto">
+        <div className="absolute top-4 w-full text-center text-xs text-gray-400 z-50">
+        ← 좌우로 넘기면 신랑/신부 소개가 나옵니다 →
+      </div>
+          <h2 className="text-2xl font-bold text-orange-500 mt-4">🎯 Vision & Prayer</h2>
+          <p className="text-sm text-gray-700 leading-relaxed max-w-lg">
+            Our Father in heaven,<br />
+            Your kingdom come,<br />
+            Your will be done,<br />
+            on earth as it is in heaven.<br /><br />
+            그러므로 너희는 가서 모든 민족을 제자로 삼고...
+          </p>
+
+          <div className="text-left text-sm text-gray-800 bg-white p-4 rounded-lg shadow max-w-md w-full space-y-3">
+            <p><strong>📍 지금:</strong> 예비부부 교육 + 결혼예배 준비</p>
+            <p><strong>🕊️ 1년:</strong> 한국 정착, 언어문화 교류, 첫 아이 출산</p>
+            <p><strong>👣 2년:</strong> 양육 + 커리어 준비</p>
+            <p><strong>🌱 4년:</strong> 둘째 출산 + 3천만 원 훈련 기금 준비</p>
+            <p><strong>🕯️ 8년:</strong> 셋째 출산 + 제자훈련</p>
+            <p><strong>🌍 10년:</strong> 파송 또는 선교지에서 복음 전파</p>
+          </div>
+
+          <a
+            href="https://prezi.com/view/5d2OzX7HWdS3PbMxBh7d/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-pink-600 underline text-sm hover:text-pink-800"
+          >
+            👉 비전 로드맵 자세히 보기
+          </a>
+
+          <p className="mt-4 text-gray-600 text-sm italic">
+            카작 청년에게 믿음을, 땅 끝까지 그리스도를.
+          </p>
+        </div>
+
+    <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white text-center px-6 py-8 overflow-hidden">
+  <h2 className="text-3xl font-extrabold text-indigo-700 mb-6">Jun's Testimony</h2>
+  
+  <div className="w-screen h-screen snap-y snap-mandatory overflow-y-scroll bg-gradient-to-b from-white to-blue-50 text-gray-800">
+  {/* Slide 1 */}
+  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center">
+    
+    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
+      어린 시절부터 예수님을 알지 못하고 살아왔습니다. 부모님의 이혼, 어머니의 희생, 삶에 대한 허무와 방황 속에서, 저는 끊임없이 ‘왜 살아야 하는가’, ‘무엇이 진리인가’를 고민했습니다. 고등학교 때 처음 교회에 갔지만, 하나님은 보이지 않아 믿을 수 없다고 생각했습니다.
+
+      그러나 삶이 바닥에 닿았던 23살, 다시 교회를 다니기 시작했습니다. ‘존재하신다고 전제하고 1년만 다녀보자’는 마음으로, 기도하고 말씀을 들으며 하나님을 구했습니다.
+    </p>
   </div>
 
-  <a
-    href="https://prezi.com/view/5d2OzX7HWdS3PbMxBh7d/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-pink-600 underline text-sm hover:text-pink-800"
-  >
-    👉 비전 로드맵 자세히 보기
-  </a>
+  {/* Slide 2 */}
+  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center bg-white">
+    <h2 className="text-2xl font-bold text-indigo-600 mb-4">복음을 깨닫다</h2>
+    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
+      호주 신학교를 준비하며 성경을 깊이 읽고 레포트를 쓰는 과정에서, 하나님께서 저 같은 죄인을 위해 당신의 아들을 십자가에 내어주셨다는 사실이 이야기로가 아니라 실제로 다가왔습니다.
 
-  <p className="mt-4 text-gray-600 text-sm italic">
-    카작 청년에게 믿음을, 땅 끝까지 그리스도를.
-  </p>
-</section>
+      이후 방글라데시 로힝야 난민촌에서 1년간 섬기며, 복음 외에는 희망이 없는 사람들 속에서 예수님의 마음과 시선이 머무를 곳을 구하며 그분의 손과 발이 되는 삶을 연습했습니다.
+    </p>
+  </div>
+
+  {/* Slide 3 */}
+  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center bg-blue-50">
+    <h2 className="text-2xl font-bold text-indigo-600 mb-4">삶으로 전하는 복음</h2>
+    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
+      카자흐스탄 단기선교를 통해 "하나님의 사랑을 삶으로 살아내는 것, 그 삶이 누군가에게 복음이 되는 선교적 삶"을 배웠습니다. 그리고 오늘, 그 사랑을 깨달아 나의 삶으로 살아가려 합니다.
+
+      "당신께선 수 천년을 나를 향해 걸어오셨습니다. 십자가에 달리시기까지, 영원한 죽음에서 나를 구원하신 그 피로, 이제는 저도 그 사랑을 따라 걷습니다."
+    </p>
+  </div>
+</div>
+</div>
+      </div>
+    </section>
+
+
+
 )}
+ 
     </div>
   );
 }
