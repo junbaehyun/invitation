@@ -49,7 +49,8 @@ function App() {
 
 const [name, setName] = useState('');
 const trimmedName = name.trim();
-const specialNames = ['김계원', '이정미', '임하경', '한수아', '박정민', '서상욱', '이수진','황승수','정지연','이지선','김다혜','정순이','박연의','김영현', '서상욱', '최보경', '서현석','권수영']
+const specialNames = ['김계원', '이정미', '임하경', '한수아', '박정민', '서상욱', '이수진','황승수','정지연','이지선','김다혜','정순이','박연의','김영현', '서상욱', '최보경', '서현석','권수영','김주형','류승현'
+]
 const isSpecialGuest = specialNames.includes(trimmedName);
 
 
@@ -656,6 +657,120 @@ useEffect(() => {
 )}
   </div>
 </section>
+
+
+
+
+
+{/* ✅ 새로운 Vision & Prayer Section */}
+{submitted && isSpecialGuest && (
+     <section
+      className="h-screen snap-start overflow-x-auto snap-x snap-mandatory scroll-smooth bg-white relative"
+      ref={containerRef}
+    >
+      {/* 안내 텍스트 */}
+      
+
+      <div className="flex w-[300vw] h-screen">
+        {/* Left - Sholpan Testimony */}
+        <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-white text-center px-6 overflow-y-auto">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Sholpan's Testimony</h2>
+            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap max-w-md">
+              Hello! My name is Sholpan, and I’m from a small village in Kazakhstan 😁.
+
+              When I was a child, a relative told me we were sinful. Later, she invited our family to church. I noticed the people there were full of joy and kindness. My sister and I started attending regularly and joined summer camps each year. We grew up among believers.
+
+              In school, we were bullied for being Christians. It continued even in college and university. But I found a new family in Christ — full of joy, unity, and love.
+
+              In 2005, I began serving in children’s camps and church worship. Later in Almaty, I served in the worship team and youth group. I also joined OM’s Silk Road outreach many times.
+
+              I worked with Operation Mercy, then prayed to serve abroad. God opened two doors: England or Kenya. I chose Kenya by faith. God provided everything as promised (Genesis 22:14).
+
+              I served in Kenya for a year. Then COVID came, and God called me back to Kazakhstan. He again provided home and work. I now serve women in difficult marriages, sharing the hope of God’s love.
+            </p>
+        </div>
+
+        {/* Center - Vision & Prayer */}
+        
+        <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-[#FFF3F7] px-6 text-center space-y-6 overflow-y-auto">
+        <div className="absolute top-4 w-full text-center text-xs text-gray-400 z-50">
+        ← 좌우로 넘기면 신랑/신부 소개가 나옵니다 →
+      </div>
+          <h2 className="text-2xl font-bold text-orange-500 mt-4">🎯 Vision & Prayer</h2>
+          <p className="text-sm text-gray-700 leading-relaxed max-w-lg">
+            Our Father in heaven,<br />
+            Your kingdom come,<br />
+            Your will be done,<br />
+            on earth as it is in heaven.<br /><br />
+            그러므로 너희는 가서 모든 민족을 제자로 삼고...
+          </p>
+
+          <div className="text-left text-sm text-gray-800 bg-white p-4 rounded-lg shadow max-w-md w-full space-y-3">
+            <p><strong>📍 지금:</strong> 예비부부 교육 + 결혼예배 준비</p>
+            <p><strong>🕊️ 1년:</strong> 한국 정착, 언어문화 교류, 첫 아이 출산</p>
+            <p><strong>👣 2년:</strong> 양육 + 커리어 준비</p>
+            <p><strong>🌱 4년:</strong> 둘째 출산 + 3천만 원 훈련 기금 준비</p>
+            <p><strong>🕯️ 8년:</strong> 셋째 출산 + 제자훈련</p>
+            <p><strong>🌍 10년:</strong> 파송 또는 선교지에서 복음 전파</p>
+          </div>
+
+          <a
+            href="https://prezi.com/view/5d2OzX7HWdS3PbMxBh7d/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-pink-600 underline text-sm hover:text-pink-800"
+          >
+            👉 비전 로드맵 자세히 보기
+          </a>
+
+          <p className="mt-4 text-gray-600 text-sm italic">
+            카작 청년에게 믿음을, 땅 끝까지 그리스도를.
+          </p>
+        </div>
+
+    <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white text-center px-6 py-8 overflow-hidden">
+  <h2 className="text-3xl font-extrabold text-indigo-700 mb-6">Jun's Testimony</h2>
+  
+  <div className="w-screen h-screen snap-y snap-mandatory overflow-y-scroll bg-gradient-to-b from-white to-blue-50 text-gray-800">
+  {/* Slide 1 */}
+  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center">
+    
+    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
+      어린 시절부터 예수님을 알지 못하고 살아왔습니다. 부모님의 이혼, 어머니의 희생, 삶에 대한 허무와 방황 속에서, 저는 끊임없이 ‘왜 살아야 하는가’, ‘무엇이 진리인가’를 고민했습니다. 고등학교 때 처음 교회에 갔지만, 하나님은 보이지 않아 믿을 수 없다고 생각했습니다.
+
+      그러나 삶이 바닥에 닿았던 23살, 다시 교회를 다니기 시작했습니다. ‘존재하신다고 전제하고 1년만 다녀보자’는 마음으로, 기도하고 말씀을 들으며 하나님을 구했습니다.
+    </p>
+  </div>
+
+  {/* Slide 2 */}
+  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center bg-white">
+    <h2 className="text-2xl font-bold text-indigo-600 mb-4">복음을 깨닫다</h2>
+    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
+      호주 신학교를 준비하며 성경을 깊이 읽고 레포트를 쓰는 과정에서, 하나님께서 저 같은 죄인을 위해 당신의 아들을 십자가에 내어주셨다는 사실이 이야기로가 아니라 실제로 다가왔습니다.
+
+      이후 방글라데시 로힝야 난민촌에서 1년간 섬기며, 복음 외에는 희망이 없는 사람들 속에서 예수님의 마음과 시선이 머무를 곳을 구하며 그분의 손과 발이 되는 삶을 연습했습니다.
+    </p>
+  </div>
+
+  {/* Slide 3 */}
+  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center bg-blue-50">
+    <h2 className="text-2xl font-bold text-indigo-600 mb-4">삶으로 전하는 복음</h2>
+    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
+      카자흐스탄 단기선교를 통해 "하나님의 사랑을 삶으로 살아내는 것, 그 삶이 누군가에게 복음이 되는 선교적 삶"을 배웠습니다. 그리고 오늘, 그 사랑을 깨달아 나의 삶으로 살아가려 합니다.
+
+      "당신께선 수 천년을 나를 향해 걸어오셨습니다. 십자가에 달리시기까지, 영원한 죽음에서 나를 구원하신 그 피로, 이제는 저도 그 사랑을 따라 걷습니다."
+    </p>
+  </div>
+</div>
+</div>
+      </div>
+    </section>
+
+
+
+)}
+
+
 {/* 감사의 말씀 섹션 */}
 <section className="min-h-screen snap-start bg-[#FFF7F0] flex flex-col items-center justify-center px-6 py-12 text-center text-brownText">
   <h2 className="text-2xl font-bold text-orange-500 mb-6">💝 감사의 말씀</h2>
@@ -766,7 +881,6 @@ Shakir 🌍</p>
   
 </section>
 
-
 {/* Section 3 - 성경 말씀 */}
 <section className="h-screen snap-start bg-pink-100 flex flex-col items-center justify-center px-6 text-center">
   {/* 날짜와 시간 */}
@@ -786,115 +900,6 @@ Shakir 🌍</p>
     From <strong>“Jesus Calling”</strong> by Sarah Young
   </p>
 </section>
-
-
-{/* ✅ 새로운 Vision & Prayer Section */}
-{submitted && isSpecialGuest && (
-     <section
-      className="h-screen snap-start overflow-x-auto snap-x snap-mandatory scroll-smooth bg-white relative"
-      ref={containerRef}
-    >
-      {/* 안내 텍스트 */}
-      
-
-      <div className="flex w-[300vw] h-screen">
-        {/* Left - Sholpan Testimony */}
-        <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-white text-center px-6 overflow-y-auto">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Sholpan's Testimony</h2>
-            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap max-w-md">
-              Hello! My name is Sholpan, and I’m from a small village in Kazakhstan 😁.
-
-              When I was a child, a relative told me we were sinful. Later, she invited our family to church. I noticed the people there were full of joy and kindness. My sister and I started attending regularly and joined summer camps each year. We grew up among believers.
-
-              In school, we were bullied for being Christians. It continued even in college and university. But I found a new family in Christ — full of joy, unity, and love.
-
-              In 2005, I began serving in children’s camps and church worship. Later in Almaty, I served in the worship team and youth group. I also joined OM’s Silk Road outreach many times.
-
-              I worked with Operation Mercy, then prayed to serve abroad. God opened two doors: England or Kenya. I chose Kenya by faith. God provided everything as promised (Genesis 22:14).
-
-              I served in Kenya for a year. Then COVID came, and God called me back to Kazakhstan. He again provided home and work. I now serve women in difficult marriages, sharing the hope of God’s love.
-            </p>
-        </div>
-
-        {/* Center - Vision & Prayer */}
-        
-        <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-[#FFF3F7] px-6 text-center space-y-6 overflow-y-auto">
-        <div className="absolute top-4 w-full text-center text-xs text-gray-400 z-50">
-        ← 좌우로 넘기면 신랑/신부 소개가 나옵니다 →
-      </div>
-          <h2 className="text-2xl font-bold text-orange-500 mt-4">🎯 Vision & Prayer</h2>
-          <p className="text-sm text-gray-700 leading-relaxed max-w-lg">
-            Our Father in heaven,<br />
-            Your kingdom come,<br />
-            Your will be done,<br />
-            on earth as it is in heaven.<br /><br />
-            그러므로 너희는 가서 모든 민족을 제자로 삼고...
-          </p>
-
-          <div className="text-left text-sm text-gray-800 bg-white p-4 rounded-lg shadow max-w-md w-full space-y-3">
-            <p><strong>📍 지금:</strong> 예비부부 교육 + 결혼예배 준비</p>
-            <p><strong>🕊️ 1년:</strong> 한국 정착, 언어문화 교류, 첫 아이 출산</p>
-            <p><strong>👣 2년:</strong> 양육 + 커리어 준비</p>
-            <p><strong>🌱 4년:</strong> 둘째 출산 + 3천만 원 훈련 기금 준비</p>
-            <p><strong>🕯️ 8년:</strong> 셋째 출산 + 제자훈련</p>
-            <p><strong>🌍 10년:</strong> 파송 또는 선교지에서 복음 전파</p>
-          </div>
-
-          <a
-            href="https://prezi.com/view/5d2OzX7HWdS3PbMxBh7d/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-pink-600 underline text-sm hover:text-pink-800"
-          >
-            👉 비전 로드맵 자세히 보기
-          </a>
-
-          <p className="mt-4 text-gray-600 text-sm italic">
-            카작 청년에게 믿음을, 땅 끝까지 그리스도를.
-          </p>
-        </div>
-
-    <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white text-center px-6 py-8 overflow-hidden">
-  <h2 className="text-3xl font-extrabold text-indigo-700 mb-6">Jun's Testimony</h2>
-  
-  <div className="w-screen h-screen snap-y snap-mandatory overflow-y-scroll bg-gradient-to-b from-white to-blue-50 text-gray-800">
-  {/* Slide 1 */}
-  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center">
-    
-    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
-      어린 시절부터 예수님을 알지 못하고 살아왔습니다. 부모님의 이혼, 어머니의 희생, 삶에 대한 허무와 방황 속에서, 저는 끊임없이 ‘왜 살아야 하는가’, ‘무엇이 진리인가’를 고민했습니다. 고등학교 때 처음 교회에 갔지만, 하나님은 보이지 않아 믿을 수 없다고 생각했습니다.
-
-      그러나 삶이 바닥에 닿았던 23살, 다시 교회를 다니기 시작했습니다. ‘존재하신다고 전제하고 1년만 다녀보자’는 마음으로, 기도하고 말씀을 들으며 하나님을 구했습니다.
-    </p>
-  </div>
-
-  {/* Slide 2 */}
-  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center bg-white">
-    <h2 className="text-2xl font-bold text-indigo-600 mb-4">복음을 깨닫다</h2>
-    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
-      호주 신학교를 준비하며 성경을 깊이 읽고 레포트를 쓰는 과정에서, 하나님께서 저 같은 죄인을 위해 당신의 아들을 십자가에 내어주셨다는 사실이 이야기로가 아니라 실제로 다가왔습니다.
-
-      이후 방글라데시 로힝야 난민촌에서 1년간 섬기며, 복음 외에는 희망이 없는 사람들 속에서 예수님의 마음과 시선이 머무를 곳을 구하며 그분의 손과 발이 되는 삶을 연습했습니다.
-    </p>
-  </div>
-
-  {/* Slide 3 */}
-  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center bg-blue-50">
-    <h2 className="text-2xl font-bold text-indigo-600 mb-4">삶으로 전하는 복음</h2>
-    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
-      카자흐스탄 단기선교를 통해 "하나님의 사랑을 삶으로 살아내는 것, 그 삶이 누군가에게 복음이 되는 선교적 삶"을 배웠습니다. 그리고 오늘, 그 사랑을 깨달아 나의 삶으로 살아가려 합니다.
-
-      "당신께선 수 천년을 나를 향해 걸어오셨습니다. 십자가에 달리시기까지, 영원한 죽음에서 나를 구원하신 그 피로, 이제는 저도 그 사랑을 따라 걷습니다."
-    </p>
-  </div>
-</div>
-</div>
-      </div>
-    </section>
-
-
-
-)}
  
     </div>
   );
