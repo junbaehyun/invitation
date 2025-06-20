@@ -72,7 +72,7 @@ const containerRef = useRef(null);
   const blockRef = useRef(null);
 
 const selected = messages[trimmedName];
-const messageText = selected?.text || `"${name}"님의 초대 메시지가 준비 중입니다. 💌`;
+const messageText = selected?.text || `"${name}"님의 초청장이 준비 중입니다. 💌`;
 const messageImage = selected?.image || null;
   
 useEffect(() => {
@@ -212,7 +212,7 @@ useEffect(() => {
   
   {/* section 0  배경 이미지 */}
   <img
-    src={`${process.env.PUBLIC_URL}/img1.png`}
+    src={`${process.env.PUBLIC_URL}/img2.png`}
     alt="커버 이미지"
     className="absolute inset-0 w-full h-full object-cover scale-105 filter grayscale transition duration-[2s] ease-out"
     style={{ animation: 'toColor 5s ease-out forwards' }}
@@ -257,7 +257,54 @@ useEffect(() => {
 
 </section>
 
+<section className="min-h-screen flex flex-col items-center justify-center text-center snap-start px-6 pt-5 bg-white relative">
 
+  <img
+    src={`${process.env.PUBLIC_URL}/verse.png`}
+    alt="웨딩 장식"
+    className="w-full max-w-md object-cover rounded-lg shadow mb-6"
+  />
+
+  <div className="w-full max-w-md bg-pink-50 bg-opacity-70 p-6 rounded-2xl shadow-lg space-y-4 transition-all duration-700 ease-out">
+    {!submitted && (
+      <>
+        <input
+          type="text"
+          placeholder="성함을 입력해주세요"
+          className="w-full px-4 py-3 border border-pink-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-pink-500 text-white py-2 rounded-xl hover:bg-pink-600 transition"
+        >
+          💌 초청장 확인하기
+        </button>
+      </>
+    )}
+
+    {/* 🎯 메시지 출력 영역 */}
+  {submitted && (
+<div className="mt-4 text-lg text-gray-700 px-2 text-left space-y-4 transition-all duration-1000 ease-out transform opacity-100 translate-y-0">
+  
+  {/* 🎯 이미지 출력 */}
+  {messageImage && (
+    <img
+      src={`${process.env.PUBLIC_URL}${messageImage}`}
+      alt={`${name}님 사진`}
+      className="mx-auto w-full max-w-xs rounded-lg object-contain shadow-md"
+    />
+  )}
+
+  {/* 🎯 메시지 텍스트 출력 */}
+  <p className="whitespace-pre-wrap break-words">{displayedText || messageText}</p>
+</div>
+)}
+  </div>
+</section>
+
+<div className={selected?.text ? "" : "hidden"}>
 {/* Section 1 - 초대합니다 */}
      
     <section className="h-screen flex flex-col items-center justify-start text-center snap-start pt-2 mx-2">
@@ -499,61 +546,138 @@ useEffect(() => {
 
 
 {/* Section - 예식 타임라인 */}
-<section className="snap-start bg-white flex flex-col items-center justify-start px-6 py-12 text-center min-h-screen">
-  <h2 className="text-2xl font-bold text-pink-500 mb-8">예식 타임라인</h2>
+<section className="snap-start bg-white flex flex-col items-center justify-start px-4 sm:px-6 lg:px-8 py-16 min-h-screen text-center">
+  <h2 className="text-3xl font-bold text-pink-500 mb-12 animate-fadeIn tracking-tight">
+    예식 타임라인
+  </h2>
 
-  <ul className="space-y-6 w-full max-w-md">
-    <li className="relative pl-6 text-left">
-      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">🕰️ 11:00</p>
-      <p className="text-lg text-gray-800 font-semibold">하객 입장 시작</p>
+  <ul className="relative w-full max-w-md space-y-14 before:content-[''] before:absolute before:top-0 before:left-[14px] before:w-0.5 before:h-full before:bg-pink-100">
+
+    {/* 11:00 - 하객 입장 */}
+    <li className="relative pl-10 animate-fadeInUp">
+      <div className="absolute left-1.5 top-1 w-3 h-3 bg-pink-400 rounded-full border-2 border-white shadow"></div>
+      <div className="text-left space-y-2">
+        <p className="text-sm text-pink-600 font-medium flex items-center gap-1">
+          🕰️ <span>11:00</span>
+        </p>
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800">하객 입장 및 대기 공간 이용</h3>
+
+        <div className="mt-4 bg-gray-50 p-5 rounded-xl shadow-sm">
+          <h4 className="text-base font-semibold text-pink-600 mb-2">💒 예배 전 안내</h4>
+          <p className="text-sm text-gray-700">
+            예식은 <span className="font-semibold">11시 30분</span>부터 시작됩니다.
+          </p>
+          <ul className="mt-2 space-y-1 text-sm text-gray-700">
+            <li>🪑 옆 건물 1층에서 <strong>다과</strong>와 <strong>영상 상영</strong></li>
+            <li>🧃 <strong>비타민·피로회복제</strong> 제공</li>
+            <li>☕ 카페에서 <strong>무료 음료 및 간식</strong> 제공 (입장 시 "신랑신부 하객입니다")</li>
+            <li>🎥 대기 공간에서도 예식 영상 상영</li>
+          </ul>
+        </div>
+      </div>
     </li>
 
-    <li className="relative pl-6 text-left">
-      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">💒 11:30</p>
-      <p className="text-lg text-gray-800 font-semibold">결혼식 본식 시작</p>
+    {/* 11:30 - 본 예식 */}
+    <li className="relative pl-10 animate-fadeInUp">
+      <div className="absolute left-1.5 top-1 w-3 h-3 bg-pink-400 rounded-full border-2 border-white shadow"></div>
+      <div className="text-left space-y-2">
+        <p className="text-sm text-pink-600 font-medium flex items-center gap-1">
+          💒 <span>11:30</span>
+        </p>
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800">예배식 결혼식 시작</h3>
+        <ul className="mt-2 space-y-1 text-sm text-gray-700">
+          <li>🎵 입장 및 찬송</li>
+          <li>🙏 기도 및 성경봉독</li>
+          <li>📖 설교 (황승수 목사님)</li>
+          <li>💍 결혼서약 및 예물 교환</li>
+          <li>👐 기도 및 안수</li>
+          <li>🎤 축가 1: 서상욱 – 자작곡 외 1곡 (15분)</li>
+          <li>🎶 축가 2: 신랑신부 감사인사 & 축복송 (5분)</li>
+          <li>🕊️ 축도 및 퇴장</li>
+        </ul>
+      </div>
     </li>
 
-    <li className="relative pl-6 text-left">
-      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">📷 12:15</p>
-      <p className="text-lg text-gray-800 font-semibold">하객 기념 촬영</p>
+    {/* 12:15 - 기념 촬영 */}
+    <li className="relative pl-10 animate-fadeInUp">
+      <div className="absolute left-1.5 top-1 w-3 h-3 bg-pink-400 rounded-full border-2 border-white shadow"></div>
+      <div className="text-left space-y-2">
+        <p className="text-sm text-pink-600 font-medium flex items-center gap-1">
+          📷 <span>12:15</span>
+        </p>
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800">하객 기념 촬영</h3>
+      </div>
     </li>
 
-    <li className="relative pl-6 text-left">
-      <div className="absolute left-0 top-1 w-3 h-3 bg-pink-400 rounded-full"></div>
-      <p className="text-sm text-gray-500">🍽️ 12:50</p>
-      <p className="text-lg text-gray-800 font-semibold">피로연 및 식사</p>
+    {/* 12:50 - 피로연 */}
+    <li className="relative pl-10 animate-fadeInUp">
+      <div className="absolute left-1.5 top-1 w-3 h-3 bg-pink-400 rounded-full border-2 border-white shadow"></div>
+      <div className="text-left space-y-2">
+        <p className="text-sm text-pink-600 font-medium flex items-center gap-1">
+          🍽️ <span>12:50</span>
+        </p>
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800">피로연 및 식사</h3>
+      </div>
     </li>
+
   </ul>
 
+  <p className="mt-10 text-sm text-gray-400 italic">* 일정은 사회자 서상욱님의 흥에 따라 변경될 수 있습니다 🎤</p>
+</section>
 
-  {/* 🍽️ 식사 예약 안내 */}
-  <div className="mt-4 bg-pink-50 border border-pink-200 p-6 rounded-xl shadow max-w-md w-full">
-    <h3 className="text-lg font-bold text-pink-600 flex items-center justify-center gap-2 mb-2">
-      🍽️ 식사 자리 예약하기
-    </h3>
-    <p className="text-sm text-gray-700 leading-relaxed mb-3">
-      <strong>~ 7월 1일까지</strong> 참석여부 부탁드려요!<br />
-      한 분 한 분의 소중한 이름을 테이블에 적어<br />
-      정성껏 준비하려 합니다.<br />
-      <span className="font-semibold text-pink-500">꼭 아래 구글폼을 제출해주세요!</span>
+<section className="snap-start bg-white flex flex-col items-center justify-start px-6 py-12 text-center min-h-screen">
+  <h2 className="text-2xl font-bold text-pink-500 mb-8">고맙습니다.</h2>
+
+  {/* 🎫 진짜 티켓 스타일 식사권 */}
+  <div className="relative bg-white border border-pink-300 rounded-2xl shadow-lg max-w-md w-full px-6 py-8 text-left">
+    
+    {/* perforated 티켓 절취선 느낌 (가로선) */}
+    <div className="absolute top-0 left-0 w-full h-4 border-t border-dashed border-pink-300 rounded-t-2xl"></div>
+    <div className="absolute bottom-0 left-0 w-full h-4 border-b border-dashed border-pink-300 rounded-b-2xl"></div>
+
+    {/* 상단 타이틀 */}
+    <div className="justify-center flex items-center mb-4  text-center ">
+      <span className="text-2xl">🎫</span>
+      <h2 className="text-xl font-bold text-600 ml-2">모바일 식사초대권</h2>
+    </div>
+
+    {/* 예약 정보 */}
+    <p className="text-lg font-semibold text-gray-800 mb-2">
+      특별히 초청받으신 분: <span className="text-pink-600">{name}</span>
     </p>
+
+    {/* 식사 정보 박스 */}
+    <div className="bg-pink-50 border border-pink-200 rounded-lg p-4 space-y-2 text-sm">
+      <p><strong>🍴 레스토랑:</strong> 서강8경 or 다이닝늘</p>
+      <p><strong>📋 메뉴:</strong> 정찬 코스 (Full Course)</p>
+      <p className="flex justify-between items-center">
+        <span><strong>💳 식사권가:</strong> 120,000원</span>
+        <span className="text-green-600 font-medium">(예약 완료)</span>
+      </p>
+    </div>
+
+    {/* 안내문 통일 */}
+  
+  </div>
+
+  {/* 하단 안내 */}
+  <p className="mt-6 text-sm text-gray-400 text-left">
+    *식당 입장시 본 식사권을 제시해 주세요. <br></br>* 본 식사는 <span className="text-gray-500 font-medium ">7월 1일까지</span> 확정된 인원에 한해 준비됩니다. 이후 일정이 확정된 경우, 함께오시는 분의 성함이 식사권에 기입되지 않았거나, 레스토랑이 7월 5일 이후에 미정인 경우, 01071978438로 연락 부탁드립니다☺️
+      <p className="text-sm text-gray-700 mt-2 leading-relaxed text-left">
+      본 예식에서는 알러지 여부, 베지테리안, 비건, 글루틴프리 등 아래 작성해주시는 예약 정보로 인근 '서강8경' 또는 '다이닝늘' 식당으로 7월 5일 최종 확정되어 감사한 마음을 담아 식사가 준비됩니다. 꼭 참석 여부를 알려주세요 😊
+    </p>
+  </p>
+  {/* 버튼 */}
     <a
       href="https://docs.google.com/forms/d/1T74BPurt7zwJpKC88eKwCThGynW9n4IVtmSYo-503uQ/edit"
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-block bg-pink-500 text-white px-6 py-2 rounded shadow hover:bg-pink-600 transition"
+      className="mt-5 inline-block bg-gradient-to-r from-pink-500 to-pink-400 text-white text-sm px-6 py-2 rounded-full shadow hover:opacity-90 transition "
     >
-      ✍️ 참석여부 작성
+      ✍️ 참석 여부 확정하기
     </a>
-    
-
-  </div>
-    <p className="mt-3 text-sm text-gray-400">* 일정은 현장 사정에 따라 변경될 수 있습니다.</p>
-    
 </section>
+
 
   {/* 📍식당 가기 섹션 */}
 <section className="h-screen snap-start bg-white flex flex-col items-center justify-center px-6 text-center space-y-4">
@@ -611,52 +735,7 @@ useEffect(() => {
     * 🐾 “조금만 걸으면 맛있는 식사가 기다려요! (운동도 되고 일석이조✨)”
   </p>
 </section>
-<section className="min-h-screen flex flex-col items-center justify-center text-center snap-start px-6 pt-5 bg-white relative">
 
-  <img
-    src={`${process.env.PUBLIC_URL}/verse.png`}
-    alt="웨딩 장식"
-    className="w-full max-w-md object-cover rounded-lg shadow mb-6"
-  />
-
-  <div className="w-full max-w-md bg-pink-50 bg-opacity-70 p-6 rounded-2xl shadow-lg space-y-4 transition-all duration-700 ease-out">
-    {!submitted && (
-      <>
-        <input
-          type="text"
-          placeholder="성함을 입력해주세요"
-          className="w-full px-4 py-3 border border-pink-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button
-          onClick={handleSubmit}
-          className="w-full bg-pink-500 text-white py-2 rounded-xl hover:bg-pink-600 transition"
-        >
-          💌 초대 메시지 보기
-        </button>
-      </>
-    )}
-
-    {/* 🎯 메시지 출력 영역 */}
-  {submitted && (
-<div className="mt-4 text-lg text-gray-700 px-2 text-left space-y-4 transition-all duration-1000 ease-out transform opacity-100 translate-y-0">
-  
-  {/* 🎯 이미지 출력 */}
-  {messageImage && (
-    <img
-      src={`${process.env.PUBLIC_URL}${messageImage}`}
-      alt={`${name}님 사진`}
-      className="mx-auto w-full max-w-xs rounded-lg object-contain shadow-md"
-    />
-  )}
-
-  {/* 🎯 메시지 텍스트 출력 */}
-  <p className="whitespace-pre-wrap break-words">{displayedText || messageText}</p>
-</div>
-)}
-  </div>
-</section>
 
 
 
@@ -673,22 +752,30 @@ useEffect(() => {
 
       <div className="flex w-[300vw] h-screen">
         {/* Left - Sholpan Testimony */}
-        <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-white text-center px-6 overflow-y-auto">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Sholpan's Testimony</h2>
-            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap max-w-md">
-              Hello! My name is Sholpan, and I’m from a small village in Kazakhstan 😁.
+      {/* Sholpan Testimony Section */}
+<div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-gradient-to-b from-white to-gray-100 text-center px-6 py-8 overflow-y-auto">
+  <div className="bg-white rounded-2xl shadow-xl p-6 max-w-md w-full flex flex-col items-center">
+    <img 
+      src="/sholpan.png" 
+      alt="Sholpan" 
+      className="w-32 h-32 rounded-full shadow-md object-cover mb-4"
+    />
+    <h2 className="text-xl font-semibold text-gray-800 mb-3">Sholpan's Testimony</h2>
+    <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap text-left">
+      Hello! My name is Sholpan, and I’m from a small village in Kazakhstan 😁.
 
-              When I was a child, a relative told me we were sinful. Later, she invited our family to church. I noticed the people there were full of joy and kindness. My sister and I started attending regularly and joined summer camps each year. We grew up among believers.
+      When I was a child, a relative told me we were sinful. Later, she invited our family to church. I noticed the people there were full of joy and kindness. My sister and I started attending regularly and joined summer camps each year. We grew up among believers.
 
-              In school, we were bullied for being Christians. It continued even in college and university. But I found a new family in Christ — full of joy, unity, and love.
+      In school, we were bullied for being Christians. It continued even in college and university. But I found a new family in Christ — full of joy, unity, and love.
 
-              In 2005, I began serving in children’s camps and church worship. Later in Almaty, I served in the worship team and youth group. I also joined OM’s Silk Road outreach many times.
+      In 2005, I began serving in children’s camps and church worship. Later in Almaty, I served in the worship team and youth group. I also joined OM’s Silk Road outreach many times.
 
-              I worked with Operation Mercy, then prayed to serve abroad. God opened two doors: England or Kenya. I chose Kenya by faith. God provided everything as promised (Genesis 22:14).
+      I worked with Operation Mercy, then prayed to serve abroad. God opened two doors: England or Kenya. I chose Kenya by faith. God provided everything as promised (Genesis 22:14).
 
-              I served in Kenya for a year. Then COVID came, and God called me back to Kazakhstan. He again provided home and work. I now serve women in difficult marriages, sharing the hope of God’s love.
-            </p>
-        </div>
+      I served in Kenya for a year. Then COVID came, and God called me back to Kazakhstan. He again provided home and work. I now serve women in difficult marriages, sharing the hope of God’s love.
+    </p>
+  </div>
+</div>
 
         {/* Center - Vision & Prayer */}
         
@@ -900,6 +987,7 @@ Shakir 🌍</p>
     From <strong>“Jesus Calling”</strong> by Sarah Young
   </p>
 </section>
+</div>
  
     </div>
   );
