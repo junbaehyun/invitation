@@ -47,6 +47,11 @@ function Countdown({ targetDate }) {
 }
 function App() {
 
+const [showJunText, setShowJunText] = useState(false);
+const junRef = useRef(null);
+const [showSholpanText, setShowSholpanText] = useState(false);
+const sholpanRef = useRef(null);
+
 const [name, setName] = useState('');
 const trimmedName = name.trim();
 const specialNames = ['김계원', '이정미', '임하경', '한수아', '박정민', '서상욱', '이수진','황승수','정지연','이지선','김다혜','정순이','박연의','김영현', '서상욱', '최보경', '서현석','권수영','김주형','류승현'
@@ -74,7 +79,66 @@ const containerRef = useRef(null);
 const selected = messages[trimmedName];
 const messageText = selected?.text || `"${name}"님의 초청장이 준비 중입니다. 💌`;
 const messageImage = selected?.image || null;
+
+useEffect(() => {
+  if (!submitted || !isSpecialGuest) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        console.log('✅ Jun section intersecting');
+
+        // Delay text fade-in just like Sholpan
+        setShowJunText(false);
+        setTimeout(() => {
+          setShowJunText(true);
+        }, 800); // You can match delay to Sholpan
+      } else {
+        console.log('🔄 Jun section exited');
+        setShowJunText(false);
+      }
+    },
+    {
+      threshold: 0.1,
+    }
+  );
+
+  const target = junRef.current;
+
+  if (target) observer.observe(target);
+
+  return () => {
+    if (target) observer.unobserve(target);
+  };
+}, [submitted, isSpecialGuest]);
+useEffect(() => {
+  if (!submitted || !isSpecialGuest) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      console.log('👀 Observing:', entry.isIntersecting, entry.target);
+      if (entry.isIntersecting) {
+        setShowSholpanText(true);
+      } else {
+        setShowSholpanText(false);
+      }
+    },
+    {
+      threshold: 0.1, // 더 민감하게 감지
+    }
+  );
+
+  const target = sholpanRef.current;
+
+  if (target) observer.observe(target);
+
+  return () => {
+    if (target) observer.unobserve(target);
+  };
+}, [submitted, isSpecialGuest]);
+
   
+
 useEffect(() => {
   if (submitted && isSpecialGuest && containerRef.current) {
     setTimeout(() => {
@@ -247,7 +311,7 @@ useEffect(() => {
   <div className="absolute bottom-0 left-0 w-full h-1/2 bg-black z-50 animate-slideOutBottom delay-[3000ms]"></div>
 
     {/* D-Day */}
-  <div className="absolute bottom-14 center bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full shadow-md z-40 animate-fadeInDown delay-[2000ms]">
+  <div className="absolute bottom-14 center bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full shadow-md z-40 animate-fadeInDown delay-[5000ms]">
     {getDday()}
   </div>
 
@@ -751,17 +815,29 @@ useEffect(() => {
       
 
       <div className="flex w-[300vw] h-screen">
-        {/* Left - Sholpan Testimony */}
-      {/* Sholpan Testimony Section */}
-<div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-gradient-to-b from-white to-gray-100 text-center px-6 py-8 overflow-y-auto">
-  <div className="bg-white rounded-2xl shadow-xl p-6 max-w-md w-full flex flex-col items-center">
-    <img 
-      src="/sholpan.png" 
-      alt="Sholpan" 
-      className="w-32 h-32 rounded-full shadow-md object-cover mb-4"
-    />
-    <h2 className="text-xl font-semibold text-gray-800 mb-3">Sholpan's Testimony</h2>
-    <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap text-left">
+{/* Sholpan Testimony Section */}
+<div
+  ref={sholpanRef}
+  className="w-screen h-screen snap-start relative overflow-hidden flex items-center justify-center"
+>
+  {/* Background Image with Blur */}
+<img
+  src={`${process.env.PUBLIC_URL}/sholpan.png`}
+  alt="Sholpan"
+  className={`absolute inset-0 w-full h-full object-cover z-10 transition-all duration-[6000ms] ease-in-out 
+    ${showSholpanText ? 'opacity-60 blur-md scale-110' : 'opacity-100 blur-0 scale-100'}
+  `}
+/>
+
+  {/* Text content (fade in) */}
+  <div
+    className={`absolute inset-0 flex items-center justify-center z-20 transition-opacity duration-[2000ms] ease-in-out delay-[800ms] ${
+      showSholpanText ? 'opacity-100' : 'opacity-0'
+    }`}
+  >
+  <div className="bg-white/50 backdrop-blur-md p-6 rounded-2xl shadow-xl max-w-md text-left text-sm leading-relaxed text-gray-800">
+      <h2 className="text-xl font-semibold text-center mb-4">Sholpan's Testimony</h2>
+      <p className="whitespace-pre-wrap">
       Hello! My name is Sholpan, and I’m from a small village in Kazakhstan 😁.
 
       When I was a child, a relative told me we were sinful. Later, she invited our family to church. I noticed the people there were full of joy and kindness. My sister and I started attending regularly and joined summer camps each year. We grew up among believers.
@@ -773,10 +849,11 @@ useEffect(() => {
       I worked with Operation Mercy, then prayed to serve abroad. God opened two doors: England or Kenya. I chose Kenya by faith. God provided everything as promised (Genesis 22:14).
 
       I served in Kenya for a year. Then COVID came, and God called me back to Kazakhstan. He again provided home and work. I now serve women in difficult marriages, sharing the hope of God’s love.
-    </p>
+
+      </p>
+    </div>
   </div>
 </div>
-
         {/* Center - Vision & Prayer */}
         
         <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-[#FFF3F7] px-6 text-center space-y-6 overflow-y-auto">
@@ -815,41 +892,98 @@ useEffect(() => {
           </p>
         </div>
 
-    <div className="w-screen h-screen snap-start flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white text-center px-6 py-8 overflow-hidden">
-  <h2 className="text-3xl font-extrabold text-indigo-700 mb-6">Jun's Testimony</h2>
-  
-  <div className="w-screen h-screen snap-y snap-mandatory overflow-y-scroll bg-gradient-to-b from-white to-blue-50 text-gray-800">
-  {/* Slide 1 */}
-  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center">
-    
-    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
-      어린 시절부터 예수님을 알지 못하고 살아왔습니다. 부모님의 이혼, 어머니의 희생, 삶에 대한 허무와 방황 속에서, 저는 끊임없이 ‘왜 살아야 하는가’, ‘무엇이 진리인가’를 고민했습니다. 고등학교 때 처음 교회에 갔지만, 하나님은 보이지 않아 믿을 수 없다고 생각했습니다.
+{/* Jun's Testimony Section */}
+<div
+  ref={junRef}
+  className="w-screen h-screen snap-start relative overflow-hidden flex items-center justify-center"
+>
+  {/* Fullscreen background image */}
+  <img
+    src={`${process.env.PUBLIC_URL}/junbae.png`}
+    alt="Junbae"
+    className={`absolute inset-0 w-full h-full object-cover z-10 transition-all duration-[5000ms] ease-in-out 
+      ${showJunText ? 'opacity-60 blur-md scale-110' : 'opacity-100 blur-0 scale-100'}
+    `}
+  />
+   
+<div
+  className={`absolute inset-0 z-20 transition-opacity duration-[2000ms] ease-in-out delay-[800ms] 
+    ${showJunText ? 'opacity-100' : 'opacity-0'}
+    flex flex-col items-center justify-start overflow-y-auto snap-y snap-mandatory gap-y-10`}
+>
+    {/* Slide 1 */}
+    <div className="w-full h-screen snap-start flex items-center justify-center px-8">
+      <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl max-w-md text-left text-sm text-gray-800 leading-relaxed">
+        <h2 className="text-xl font-semibold text-center mb-4">Jun's Testimony</h2>
+        <p className="whitespace-pre-wrap">
+          어린 시절부터 예수님을 알지 못하고 살아왔습니다. 어머니의 희생, 삶에 대한 허무와 방황 속에서, 저는 끊임없이 ‘나는 누구인지', '왜 살아야 하는지' 를 고민했습니다. '많이 힘들지? ' 어깨를 다독여 주었던 친구는 제게 '교회 가볼래?' 고등학교 때 처음 교회에 갔지만, 하나님은 보이지 않아 믿지 않을 것을 선택했습니다.
+<br />< br />
+       삶이 바닥에 닿았던 23살, '지금 1도의 변화가 훗날 큰 전화점이 될 거야' 저는 그분의 인도로 교회를 다니기 시작했습니다. ‘존재하신다고 전제하고 1년만 다녀보자’는 마음으로, '하나님, 저는 당신이 보이지 않아서 믿지 않기로 선택했어요. 그런데 이번엔 보이지 않지만 당신께서 이 기도를 들으실 것을 믿으며 기도해요. 만약 정말 주님께서 이 기도를 듣고 계신다면, 주님께서 도와주세요. 보이지 않는 사실을 볼 수 있게.' 그런데 우연의 일치라고 경험주의로 일축 하기엔 다 설명할 수 없는 무언가. '어 정말 인가? 정말 내 기도를 듣고 계신가? '...
+        </p>
+      </div>
+    </div>
+
+    {/* Slide 2 */}
+    <div className="w-full h-screen snap-start flex items-center justify-center px-8">
+      <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl max-w-md text-left text-sm text-gray-800 leading-relaxed">
+        <h2 className="text-xl font-semibold text-center mb-4">말씀을 읽게 되다</h2>
+        <p className="whitespace-pre-wrap">
+         그렇게 저는 멋진 형님들과 누나들, 건강한 공동체 가운데서 믿음을 찾아갔습니다. 그러던 중 필리핀에서 우연히 참석했던 예배에서 목사님께선 설교 시간에 기대했던 말씀은 전하지 않으시고 새번역 성경책을 나눠 주시고 각자 읽게 하였습니다. 성경책은 목사님만 이해할 수 있다고 생각했습니다. 그런데 말씀이 이해가 되고 내용이 이해가 됐고 흐르는 눈물이 오랜시간 멈추지 않아 흐느끼던 제 머리에 안수하며 알 수 없는 언어로 기도해주셨었습니다. 
+        그날 부터 저는 매일 성경책을 읽으며 하나님의 사랑을 알아갔습니다.
+        </p>
+      </div>
+    </div>
+{/* Slide 3 */}
+    <div className="w-full h-screen snap-start flex items-center justify-center px-8">
+      <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl max-w-md text-left text-sm text-gray-800 leading-relaxed">
+        <h2 className="text-xl font-semibold text-center mb-4">복음을 알게되다</h2>
+        <p className="whitespace-pre-wrap">
+          호주 신학교를 준비하며 성경을 깊이 읽고 레포트를 쓰는 과정에서, 하나님께서 저 같은 죄인을 위해 당신의 아들을 십자가에 내어주셨다는 사실이 이야기로가 아니라 실제로 다가왔습니다. <br /> 이후 방글라데시 로힝야 난민촌에서 1년간 섬기며, 복음 외에는 희망이 없는 사람들 속에서 예수님의 마음과 시선이 머무를 곳을 구하며 그분의 손과 발이 되는 삶을 연습했습니다.
+
+        </p>
+         </div>
+    </div>        
+    {/* Slide 3 */}
+    <div className="w-full h-screen snap-start flex items-center justify-center px-8">
+      <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl max-w-md text-left text-sm text-gray-800 leading-relaxed">
+        <h2 className="text-xl font-semibold text-center mb-4">삶으로 전하는 복음</h2>
+        <p className="whitespace-pre-wrap">
+          카자흐스탄 단기선교를 통해 <br />“하나님의 사랑을 삶으로 살아내는 것, 그 삶이 누군가에게 복음이 되는 선교적 삶”을 배웠습니다. <br /> <br />그리고 오늘,<br /> 그 사랑을 깨달아 나의 삶으로 살아가려 합니다.
+<br /><br />
+“당신께선 수 천년을 나를 향해 걸어오셨습니다. 십자가에 달리시기까지, 영원한 죽음에서 나를 구원하신 그 피로, 이제는 저도 그 사랑을 따라 걷습니다.”
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {/* Text content */}
+  {/* <div
+    className={`absolute inset-0 flex items-center justify-center z-20 transition-opacity duration-[2000ms] ease-in-out delay-[800ms] 
+      ${showJunText ? 'opacity-100' : 'opacity-0'}
+    `}
+  >
+    <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl max-w-md text-left text-sm leading-relaxed text-gray-800">
+      <h2 className="text-xl font-semibold text-center mb-4">Jun's Testimony</h2>
+      <p className="whitespace-pre-wrap">
+
+      어린 시절부터 예수님을 알지 못하고 살아왔습니다. 어머니의 희생, 삶에 대한 허무와 방황 속에서, 저는 끊임없이 ‘나는 누구인지', '왜 살아야 하는지' 를 고민했습니다. 고등학교 때 처음 교회에 갔지만, 하나님은 보이지 않아 믿지 않을 것을 선택했습니다.
 
       그러나 삶이 바닥에 닿았던 23살, 다시 교회를 다니기 시작했습니다. ‘존재하신다고 전제하고 1년만 다녀보자’는 마음으로, 기도하고 말씀을 들으며 하나님을 구했습니다.
-    </p>
-  </div>
 
-  {/* Slide 2 */}
-  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center bg-white">
-    <h2 className="text-2xl font-bold text-indigo-600 mb-4">복음을 깨닫다</h2>
-    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
       호주 신학교를 준비하며 성경을 깊이 읽고 레포트를 쓰는 과정에서, 하나님께서 저 같은 죄인을 위해 당신의 아들을 십자가에 내어주셨다는 사실이 이야기로가 아니라 실제로 다가왔습니다.
 
-      이후 방글라데시 로힝야 난민촌에서 1년간 섬기며, 복음 외에는 희망이 없는 사람들 속에서 예수님의 마음과 시선이 머무를 곳을 구하며 그분의 손과 발이 되는 삶을 연습했습니다.
-    </p>
-  </div>
+이후 방글라데시 로힝야 난민촌에서 1년간 섬기며, 복음 외에는 희망이 없는 사람들 속에서 예수님의 마음과 시선이 머무를 곳을 구하며 그분의 손과 발이 되는 삶을 연습했습니다.
 
-  {/* Slide 3 */}
-  <div className="w-screen h-screen snap-start flex flex-col items-center justify-center px-8 text-center bg-blue-50">
-    <h2 className="text-2xl font-bold text-indigo-600 mb-4">삶으로 전하는 복음</h2>
-    <p className="text-base max-w-2xl leading-loose whitespace-pre-wrap">
-      카자흐스탄 단기선교를 통해 "하나님의 사랑을 삶으로 살아내는 것, 그 삶이 누군가에게 복음이 되는 선교적 삶"을 배웠습니다. 그리고 오늘, 그 사랑을 깨달아 나의 삶으로 살아가려 합니다.
+카자흐스탄 단기선교를 통해 “하나님의 사랑을 삶으로 살아내는 것, 그 삶이 누군가에게 복음이 되는 선교적 삶”을 배웠습니다. 그리고 오늘, 그 사랑을 깨달아 나의 삶으로 살아가려 합니다.
 
-      "당신께선 수 천년을 나를 향해 걸어오셨습니다. 십자가에 달리시기까지, 영원한 죽음에서 나를 구원하신 그 피로, 이제는 저도 그 사랑을 따라 걷습니다."
+“당신께선 수 천년을 나를 향해 걸어오셨습니다. 십자가에 달리시기까지, 영원한 죽음에서 나를 구원하신 그 피로, 이제는 저도 그 사랑을 따라 걷습니다.”
+
     </p>
+    </div>
   </div>
-</div>
-</div>
+</div> */}
+  
       </div>
     </section>
 
@@ -907,7 +1041,7 @@ useEffect(() => {
 김다혜전도사님, 용찬형제, 정훈형제, 수녕형제, 재원형제</p>
 
 <p>사회자:<br />
-진짜 호주 왕복 티켓 사서 사회자 볼꺼야 정민아???</p>
+준비된 사회자 - 서상욱 </p>
 
 <p>처음 하나님께로 인도해 주신 분:<br />
 제충만 형님</p>
