@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import dayjs from 'dayjs';
 import DailyDevotional from './DailyDevotional';
 import messages from './message';
+import GallerySection from './components/GallerySection';
 
 
 // App 함수 바깥에 추가
@@ -47,6 +48,14 @@ function Countdown({ targetDate }) {
 }
 function App() {
 
+/*google sheet*/
+  const [guestName, setGuestName] = useState('');
+  const [guestInfo, setGuestInfo] = useState(null);
+  const [isGuestSubmitted, setIsGuestSubmitted] = useState(false);
+
+
+
+
 const [showJunText, setShowJunText] = useState(false);
 const junRef = useRef(null);
 const [showSholpanText, setShowSholpanText] = useState(false);
@@ -54,7 +63,23 @@ const sholpanRef = useRef(null);
 
 const [name, setName] = useState('');
 const trimmedName = name.trim();
-const specialNames = ['김계원', '이정미', '임하경', '한수아', '박정민', '서상욱', '이수진','황승수','정지연','이지선','김다혜','정순이','박연의','김영현', '서상욱', '최보경', '서현석','권수영','김주형','류승현'
+const specialNames = ['김계원', '이정미', '임하경', '한수아', '박정민', '서상욱', '이수진','황승수','정지연','이지선','김다혜','정순이','박연의','김영현', '서상욱', '최보경', '서현석','권수영','김주형','류승현','민사욱','송정화','이주희',
+  
+  '조애',
+  '염창열','정선미',
+  
+  '김해성', '정경도', '정환희',
+  '대사관',
+  '권용찬', '한재원', '김재현', '엄정훈', '장수녕',
+  '이상인', '이순', '이득순', '구정애', '김영자', '김귀자', '장용순', '이정순', '김옥자', '김윤식',
+  '오명숙', '김준', '유상목', '채용수', '홍영미', '임동식', '양선아', '양원철', '하연순', '김성자',
+  '정인영', '김영애', '이형직', '송재연', '박철우', '안나영', '양성용', '김선경', '권순명', '유지혜', '구자천',
+  '이성희', '김현희', '정지영', '이정민',
+  '송미화', '이수진', '이지선', '강혜신',
+  '황태성', '김고운', '안사랑', '박영수', '장윤정',
+  '정혜숙', '정명란', '황승수', '정지연', '이정미', '차경덕', '김미영',
+  '여정훈','조은화',
+
 ]
 const isSpecialGuest = specialNames.includes(trimmedName);
 
@@ -190,7 +215,7 @@ useEffect(() => {
   }, []);
 
   
- const handleSubmit = () => {
+ const handleSubmit = async() => {
   setSubmitted(true);
 const trimmedName = name.trim();
 const selected = messages[trimmedName];
@@ -210,7 +235,32 @@ const fullMessage = selected?.text || `"${trimmedName}"님의 초대 메시지�
       return prev + 1;
     });
   }, 60);
-};
+
+    // 🧠 Google Form 정보 가져오기
+    try {
+      const res = await fetch(
+        'https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLghBfmh3lYZ7dD5zGuw1A_dvP2OB4y0yU9YWxG4UfD_xv9fXAJBaBb0czAI2JJd2vbjlM8ybmOt1bAQNOaZ8nay_pajRx8CVkOtSHRrQmhT9NiUkl9VeoliwV8KL2YSyOm_nLmvqwkCT8UKvnpITXOjUY2NfLsTIUF_iVAbaUEdfuVI_qWCEDpJoDpCPylbjTgxUO83iFt8SOZOQSyPpd34GCxbd93FGCM1rSGKKU2S8R2hf64NZvPw9FJlvMDHtK53ITsxXrDBSonxM8SAhrotb3-m1A&lib=Myy2aM2HK6QhKJyFJvzaxSgKPMwQAznpp'
+      );
+      const data = await res.json();
+
+      const matched = data.find(
+        (d) => d['성함을 입력해주세요.']?.trim() === trimmedName
+      );
+
+      if (matched) {
+        setGuestInfo(matched);
+      } else {
+        setGuestInfo({ '함께오시는 분의 성함을 알 수 있을까요?': '정보 없음' });
+      }
+      setGuestName(trimmedName); // ✅ 대표자 이름 저장
+    setIsGuestSubmitted(true); // ✅ 식사권 표시 트리거
+    } catch (err) {
+      console.error('구글 시트 가져오기 실패:', err);
+      setGuestInfo({ '함께오시는 분의 성함을 알 수 있을까요?': '오류 발생' });
+          setGuestName(trimmedName); // ✅ 실패해도 이름 저장
+    setIsGuestSubmitted(true); // ✅ 실패해도 박스는 보여줌
+    }
+  };
 
 useEffect(() => {
   return () => {
@@ -605,7 +655,8 @@ useEffect(() => {
   </div>
 
   {/* 하단 안내 */}
-  <p className="mt-6 text-sm text-gray-400">* 지도 앱을 눌러 바로 길찾기를 시작하세요.</p>
+  
+    <p className="mt-6 text-sm text-gray-400 text-left">* 식당 주차 ➡️ 교회 예배 ➡️ 다시 식당 이동 및 식사  <br /> * 주차가능 시간: 10:00 ~ 15:00 <br/> * 발렛파킹 비용은 사전에 지불 되었습니다. </p>
 </section>
 
 
@@ -702,7 +753,7 @@ useEffect(() => {
     {/* 상단 타이틀 */}
     <div className="justify-center flex items-center mb-4  text-center ">
       <span className="text-2xl">🎫</span>
-      <h2 className="text-xl font-bold text-600 ml-2">모바일 식사초대권</h2>
+      <h2 className="text-xl font-bold text-600 ml-2">서강8경/다이닝늘 식사권</h2>
     </div>
 
     {/* 예약 정보 */}
@@ -711,25 +762,80 @@ useEffect(() => {
     </p>
 
     {/* 식사 정보 박스 */}
-    <div className="bg-pink-50 border border-pink-200 rounded-lg p-4 space-y-2 text-sm">
-      <p><strong>🍴 레스토랑:</strong> 서강8경 or 다이닝늘</p>
-      <p><strong>📋 메뉴:</strong> 정찬 코스 (Full Course)</p>
-      <p className="flex justify-between items-center">
-        <span><strong>💳 식사권가:</strong> 120,000원</span>
-        <span className="text-green-600 font-medium">(예약 완료)</span>
-      </p>
-    </div>
+   {isGuestSubmitted && (
+        <>
+          
 
-    {/* 안내문 통일 */}
+        {guestInfo && (
+  <div className="bg-pink-50 border border-pink-200 rounded-lg p-4 space-y-2 text-sm">
+
+    {/* 참석 여부 */}
+    <p>
+      <strong>✅ 참석 여부:</strong>{' '}
+      {guestInfo['성함을 입력해주세요.'] ? (
+        <span className="text-green-600 font-medium">작성 완료</span>
+      ) : (
+        <a
+          href="https://docs.google.com/forms/d/1T74BPurt7zwJpKC88eKwCThGynW9n4IVtmSYo-503uQ/edit"
+          className="text-blue-600 underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          참석 여부를 작성해주세요
+        </a>
+      )}
+    </p>
+
+    {/* ✅ 참석자일 경우만 아래 표시 */}
+    {guestInfo['성함을 입력해주세요.'] && (
+      <>
+        <p>
+          <strong>식사 여부:</strong>{' '}
+          {guestInfo['Q: 귀한시간 내셔서 멀리서 오셨는데, 저희가 식사 대접할 기회는 주실 꺼죠?   ✨']
+            ? guestInfo['Q: 귀한시간 내셔서 멀리서 오셨는데, 저희가 식사 대접할 기회는 주실 꺼죠?   ✨']
+            : '식사 불참'}
+        </p>
+
+        <p>
+          <strong>식사권 ID:</strong>{' '}
+          {guestInfo['연락처를 입력해주세요.']
+            ? guestInfo['연락처를 입력해주세요.']
+            : '정보 없음'}
+        </p>
+
+        <p>
+          <strong>🍴 동행자:</strong>{' '}
+          {guestInfo['함께오시는 분의 성함을 알 수 있을까요?']
+            ? guestInfo['함께오시는 분의 성함을 알 수 있을까요?']
+            : '없음'}
+        </p>
+
+        
+      </>
+    )}
+    <p>
+          <strong>📋 메뉴:</strong> 정찬 코스 (Full Course)
+        </p>
+
+        <p className="flex justify-between items-center">
+          <span>
+            <strong>💳 식사권가:</strong> Special voucher
+          </span>
+          <span className="text-green-600 font-medium">(예약 완료)</span>
+        </p>
+  </div>
+)}
+        </>
+      )} 
+
   
   </div>
-
+  {/* test*/}
+  
   {/* 하단 안내 */}
   <p className="mt-6 text-sm text-gray-400 text-left">
-    *식당 입장시 본 식사권을 제시해 주세요. <br></br>* 본 식사는 <span className="text-gray-500 font-medium ">7월 1일까지</span> 확정된 인원에 한해 준비됩니다. 이후 일정이 확정된 경우, 함께오시는 분의 성함이 식사권에 기입되지 않았거나, 레스토랑이 7월 5일 이후에 미정인 경우, 01071978438로 연락 부탁드립니다☺️
-      <p className="text-sm text-gray-700 mt-2 leading-relaxed text-left">
-      본 예식에서는 알러지 여부, 베지테리안, 비건, 글루틴프리 등 아래 작성해주시는 예약 정보로 인근 '서강8경' 또는 '다이닝늘' 식당으로 7월 5일 최종 확정되어 감사한 마음을 담아 식사가 준비됩니다. 꼭 참석 여부를 알려주세요 😊
-    </p>
+    * 본 예식에서 별도의 종이 식사권은 없습니다. 레스토랑 입장시 본 식사권을 제시해 주세요.  <br></br>* 본 예식에서는 알러지 여부, 베지테리안, 비건, 글루틴프리 등 아래 작성해주시는 예약 정보로 인근 '서강8경' 또는 '다이닝늘' 식당으로 7월 6일 최종 확정되어 감사한 마음을 담아 식사가 준비됩니다. <span className="text-gray-500 font-medium ">7월 5일까지</span> 꼭 참석 여부를 알려주세요 😊 이후 일정이 확정된 경우, 01071978438로 연락 부탁드립니다☺️
+    
   </p>
   {/* 버튼 */}
     <a
@@ -838,6 +944,7 @@ useEffect(() => {
   <div className="bg-white/50 backdrop-blur-md p-6 rounded-2xl shadow-xl max-w-md text-left text-sm leading-relaxed text-gray-800">
       <h2 className="text-xl font-semibold text-center mb-4">Sholpan's Testimony</h2>
       <p className="whitespace-pre-wrap">
+      "어렸을때 그림으로된 성경책을 여러번 읽었어요. 그중에 이삭의 이야기는 인상깊었어요. '어떻게 아들을 내어줄 수 있을까? 얼마나 힘들었을까?', 추후 복음을 알게 되었을 때, 하나님께선 어떻게.. 예수님을 내어주실 수 있었을까?.. <br />  
       Hello! My name is Sholpan, and I’m from a small village in Kazakhstan 😁.
 
       When I was a child, a relative told me we were sinful. Later, she invited our family to church. I noticed the people there were full of joy and kindness. My sister and I started attending regularly and joined summer camps each year. We grew up among believers.
@@ -990,6 +1097,11 @@ useEffect(() => {
 
 
 )}
+<section className="min-h-screen snap-start bg-[#FFF7F0] flex  px-1 py-12 ">
+<GallerySection />
+
+
+</section>
 
 
 {/* 감사의 말씀 섹션 */}
@@ -1038,7 +1150,7 @@ useEffect(() => {
 가수 & 연예인 - 완전 멋진 상욱형님 🎤</p>
 
 <p>예식 및 교회 안내:<br />
-김다혜전도사님, 용찬형제, 정훈형제, 수녕형제, 재원형제</p>
+김다혜전도사님, 용찬형제, 정훈형제, 재현형제 수녕형제, 재원형제,</p>
 
 <p>사회자:<br />
 준비된 사회자 - 서상욱 </p>
@@ -1047,7 +1159,7 @@ useEffect(() => {
 제충만 형님</p>
 
 <p>살며 아름다운 첫 믿음의 공동체를 경험케 해주신 형님 누님:<br />
-호길, 진영, 주희, 충만</p>
+호길, 진영, 주희, 충만, 사욱, 정화</p>
 
 <p>준배 사람 만들어 주신 분들:<br />
 김향래 어머님, 김주형 목사님</p>
@@ -1097,9 +1209,11 @@ Shakir 🌍</p>
   </p>
 
   <p className="text-sm mt-4 text-gray-400">
-    💌 감사한 마음 담아: 준배 & 숄판 올림 <br/>
-  </p>
+   
+    
+💌 감사한 마음 담아: 준배 & 숄판 올림  </p>
   
+    
 </section>
 
 {/* Section 3 - 성경 말씀 */}
@@ -1120,6 +1234,8 @@ Shakir 🌍</p>
   <p className="mt-4 text-xs text-gray-500 italic">
     From <strong>“Jesus Calling”</strong> by Sarah Young
   </p>
+
+
 </section>
 </div>
  
